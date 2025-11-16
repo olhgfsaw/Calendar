@@ -5,7 +5,7 @@
     size="sm"
     :show-close="false"
   >
-    <p class="text-gray-600 dark:text-gray-400">{{ message }}</p>
+    <p class="text-gray-600 dark:text-gray-200">{{ message }}</p>
     
     <template #footer>
       <PrimaryButton variant="outline" @click="handleCancel">

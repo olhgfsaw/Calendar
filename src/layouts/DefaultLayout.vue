@@ -43,19 +43,49 @@
               <LanguageSwitcher />
               <ThemeToggle />
               <NotificationBell />
-              <Avatar
-                v-if="authStore.currentUser"
-                :src="authStore.currentUser.photoURL"
-                :name="authStore.currentUser.displayName"
-                size="md"
-              />
-              <button
-                v-if="authStore.isAuthenticated"
-                class="px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg"
-                @click="logout"
-              >
-                {{ $t('nav.logout') }}
-              </button>
+              
+              <div v-if="authStore.currentUser" class="relative">
+                <button
+                  @click="showUserMenu = !showUserMenu"
+                  class="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <Avatar
+                    :src="authStore.currentUser.photoURL"
+                    :name="authStore.currentUser.displayName"
+                    size="md"
+                  />
+                </button>
+
+                <Transition
+                  enter-active-class="transition ease-out duration-100"
+                  enter-from-class="transform opacity-0 scale-95"
+                  enter-to-class="transform opacity-100 scale-100"
+                  leave-active-class="transition ease-in duration-75"
+                  leave-from-class="transform opacity-100 scale-100"
+                  leave-to-class="transform opacity-0 scale-95"
+                >
+                  <div
+                    v-if="showUserMenu"
+                    class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10"
+                  >
+                    <div class="py-1">
+                      <router-link
+                        to="/profile"
+                        class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        @click="showUserMenu = false"
+                      >
+                        {{ $t('nav.profile') }}
+                      </router-link>
+                      <button
+                        class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        @click="logout"
+                      >
+                        {{ $t('nav.logout') }}
+                      </button>
+                    </div>
+                  </div>
+                </Transition>
+              </div>
             </div>
           </div>
         </header>
@@ -69,6 +99,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 import Logo from '@/components/base/layoutPieces/Logo.vue'
@@ -87,6 +118,7 @@ import {
 const authStore = useAuthStore()
 const uiStore = useUiStore()
 const router = useRouter()
+const showUserMenu = ref(false)
 
 const navigation = [
   { path: '/calendar', label: 'nav.calendar', icon: CalendarDaysIcon },
@@ -96,6 +128,7 @@ const navigation = [
 ]
 
 const logout = async () => {
+  showUserMenu.value = false
   await authStore.logout()
   router.push('/login')
 }

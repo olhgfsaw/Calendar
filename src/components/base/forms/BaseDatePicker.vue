@@ -117,7 +117,7 @@
     </transition>
 
     <p v-if="error" class="mt-1 text-sm text-red-500">{{ error }}</p>
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ hint }}</p>
+    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ hint }}</p>
   </div>
 </template>
 

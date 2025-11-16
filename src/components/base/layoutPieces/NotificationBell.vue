@@ -2,7 +2,7 @@
   <div class="relative">
     <button
       type="button"
-      class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative"
+      class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-100 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 relative"
       @click="isOpen = !isOpen"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -29,7 +29,7 @@
           <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('notifications.title') || 'Notifications' }}</h3>
         </div>
         <div class="max-h-96 overflow-y-auto">
-          <div v-if="notificationsStore.notifications.length === 0" class="p-4 text-center text-gray-500 dark:text-gray-400">
+          <div v-if="notificationsStore.notifications.length === 0" class="p-4 text-center text-gray-500 dark:text-gray-300">
             {{ $t('notifications.noNotifications') || 'No notifications' }}
           </div>
           <div
@@ -40,7 +40,7 @@
             @click="markAsRead(notification.id)"
           >
             <p class="text-sm font-medium text-gray-900 dark:text-white">{{ notification.title }}</p>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ notification.message }}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{{ notification.message }}</p>
           </div>
         </div>
       </div>
