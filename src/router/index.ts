@@ -31,6 +31,42 @@ const router = createRouter({
       meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
+      path: '/masters',
+      name: 'masters',
+      component: () => import('@/pages/MastersListPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
+    },
+    {
+      path: '/masters/:id',
+      name: 'master',
+      component: () => import('@/pages/MasterPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
+    },
+    {
+      path: '/salons',
+      name: 'salons',
+      component: () => import('@/pages/SalonsListPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
+    },
+    {
+      path: '/salons/:id',
+      name: 'salon',
+      component: () => import('@/pages/SalonPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
+    },
+    {
+      path: '/clients',
+      name: 'clients',
+      component: () => import('@/pages/ClientsListPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
+    },
+    {
+      path: '/clients/:id',
+      name: 'client',
+      component: () => import('@/pages/ClientPage.vue'),
+      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
+    },
+    {
       path: '/forbidden',
       name: 'forbidden',
       component: () => import('@/pages/Forbidden.vue'),

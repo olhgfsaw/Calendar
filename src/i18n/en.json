@@ -16,7 +16,19 @@
     "next": "Next",
     "previous": "Previous",
     "close": "Close",
-    "submit": "Submit"
+    "submit": "Submit",
+    "today": "Today",
+    "clear": "Clear",
+    "hour": "Hour",
+    "minute": "Minute",
+    "locale": "en-US",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
   },
   "nav": {
     "calendar": "Calendar",
@@ -81,7 +93,17 @@
     "status": "Status",
     "active": "Active",
     "inactive": "Inactive",
-    "vacation": "On Vacation"
+    "vacation": "On Vacation",
+    "bio": "Biography",
+    "bioPlaceholder": "Tell us about yourself...",
+    "photo": "Photo URL",
+    "photoPlaceholder": "https://example.com/photo.jpg",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "masterCreated": "Master created successfully",
+    "masterUpdated": "Master updated successfully",
+    "masterDeleted": "Master deleted successfully",
+    "deleteConfirmMessage": "Are you sure you want to delete this master? This action cannot be undone."
   },
   "salons": {
     "title": "Salons",
@@ -94,7 +116,14 @@
     "country": "Country",
     "phone": "Phone",
     "email": "Email",
-    "workingHours": "Working Hours"
+    "workingHours": "Working Hours",
+    "description": "Description",
+    "descriptionPlaceholder": "Describe your salon...",
+    "workingHoursPlaceholder": "e.g., Mon-Fri: 9:00-20:00, Sat-Sun: 10:00-18:00",
+    "salonCreated": "Salon created successfully",
+    "salonUpdated": "Salon updated successfully",
+    "salonDeleted": "Salon deleted successfully",
+    "deleteConfirmMessage": "Are you sure you want to delete this salon? This action cannot be undone."
   },
   "clients": {
     "title": "Clients",
@@ -107,7 +136,12 @@
     "email": "Email",
     "notes": "Notes",
     "lastVisit": "Last Visit",
-    "totalAppointments": "Total Appointments"
+    "totalAppointments": "Total Appointments",
+    "notesPlaceholder": "Add any special notes or preferences...",
+    "clientCreated": "Client created successfully",
+    "clientUpdated": "Client updated successfully",
+    "clientDeleted": "Client deleted successfully",
+    "deleteConfirmMessage": "Are you sure you want to delete this client? This action cannot be undone."
   },
   "validation": {
     "email": {
@@ -134,7 +168,9 @@
     },
     "date": {
       "required": "Date is required"
-    }
+    },
+    "required": "This field is required",
+    "formErrors": "Please fix the errors in the form"
   },
   "notifications": {
     "title": "Notifications",

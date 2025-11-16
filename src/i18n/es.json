@@ -16,7 +16,19 @@
     "next": "Siguiente",
     "previous": "Anterior",
     "close": "Cerrar",
-    "submit": "Enviar"
+    "submit": "Enviar",
+    "today": "Hoy",
+    "clear": "Limpiar",
+    "hour": "Hora",
+    "minute": "Minuto",
+    "locale": "es-ES",
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "sunday": "Domingo"
   },
   "nav": {
     "calendar": "Calendario",
@@ -134,7 +146,9 @@
     },
     "date": {
       "required": "La fecha es obligatoria"
-    }
+    },
+    "required": "Este campo es obligatorio",
+    "formErrors": "Por favor corrija los errores en el formulario"
   },
   "notifications": {
     "title": "Notificaciones",
