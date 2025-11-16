@@ -101,7 +101,11 @@
     "appointmentUpdated": "Запись обновлена успешно",
     "appointmentDeleted": "Запись удалена успешно",
     "filterByMaster": "Мастер",
-    "filterByStatus": "Статус"
+    "filterByStatus": "Статус",
+    "dragToReschedule": "Перетащите для переноса",
+    "allDay": "Весь день",
+    "noAppointments": "Нет записей",
+    "selectView": "Выбрать вид"
   },
   "appointments": {
     "title": "Записи",
