@@ -86,6 +86,28 @@
     "notes": "Заметки",
     "status": "Статус"
   },
+  "appointments": {
+    "title": "Записи",
+    "createAppointment": "Создать запись",
+    "editAppointment": "Редактировать запись",
+    "client": "Клиент",
+    "master": "Мастер",
+    "service": "Услуга",
+    "date": "Дата",
+    "startTime": "Время начала",
+    "endTime": "Время окончания",
+    "duration": "Длительность",
+    "notes": "Заметки",
+    "notesPlaceholder": "Добавить заметки об этой записи...",
+    "status": {
+      "label": "Статус",
+      "scheduled": "Запланирована",
+      "confirmed": "Подтверждена",
+      "cancelled": "Отменена",
+      "completed": "Завершена",
+      "no-show": "Не явился"
+    }
+  },
   "masters": {
     "title": "Мастера",
     "addMaster": "Добавить мастера",

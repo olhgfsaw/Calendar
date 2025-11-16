@@ -86,6 +86,28 @@
     "notes": "Notas",
     "status": "Estado"
   },
+  "appointments": {
+    "title": "Citas",
+    "createAppointment": "Crear Cita",
+    "editAppointment": "Editar Cita",
+    "client": "Cliente",
+    "master": "Maestro",
+    "service": "Servicio",
+    "date": "Fecha",
+    "startTime": "Hora de Inicio",
+    "endTime": "Hora de Fin",
+    "duration": "Duración",
+    "notes": "Notas",
+    "notesPlaceholder": "Agregar notas sobre esta cita...",
+    "status": {
+      "label": "Estado",
+      "scheduled": "Programada",
+      "confirmed": "Confirmada",
+      "cancelled": "Cancelada",
+      "completed": "Completada",
+      "no-show": "No se presentó"
+    }
+  },
   "masters": {
     "title": "Maestros",
     "addMaster": "Añadir Maestro",
