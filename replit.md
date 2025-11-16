@@ -17,7 +17,16 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
-### November 16, 2025 - MVP Setup Complete
+### November 16, 2025 - Management Pages & Form Components Added
+- ✅ Created BaseDatePicker component with calendar grid and i18n support
+- ✅ Created BaseTimePicker with 30-minute step support and v-model integration
+- ✅ Implemented all management pages: Masters, Salons, Clients (list + detail views)
+- ✅ Added management routes with role-based permissions (admin, manager)
+- ✅ Extended translations for all three languages (weekdays, validation, management sections)
+- ✅ Fixed BaseTimePicker to properly emit v-model updates
+- ⚠️ BaseDatePicker needs locale-specific formatting improvements (month names, week start)
+
+### November 16, 2025 - Initial MVP Setup Complete
 - ✅ Created complete UI component library (buttons, forms, modals, layout pieces)
 - ✅ Implemented authentication flow with VeeValidate integration
 - ✅ Added role-based routing with permission checks
@@ -35,6 +44,7 @@ src/
 │   └── base/
 │       ├── buttons/         # PrimaryButton, IconButton, TextButton
 │       ├── forms/           # BaseInput, BaseTextarea, BaseSelect, BaseCheckbox, BaseSwitch
+│       │                    # BaseDatePicker, BaseTimePicker (30-min step support)
 │       ├── modals/          # BaseModal, ConfirmModal
 │       └── layoutPieces/    # Logo, Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
 ├── layouts/
@@ -45,6 +55,12 @@ src/
 │   ├── JoinPage.vue         # User registration
 │   ├── ForgotPasswordPage.vue
 │   ├── CalendarPage.vue     # Main calendar view
+│   ├── MastersListPage.vue  # Masters management
+│   ├── MasterPage.vue       # Master detail/edit
+│   ├── SalonsListPage.vue   # Salons management
+│   ├── SalonPage.vue        # Salon detail/edit
+│   ├── ClientsListPage.vue  # Clients management
+│   ├── ClientPage.vue       # Client detail/edit
 │   ├── Forbidden.vue        # 403 Access Denied
 │   └── NotFound.vue         # 404 Page
 ├── router/
@@ -79,6 +95,12 @@ All routes support role-based access control:
 - `/join` - Registration page (public)
 - `/forgot-password` - Password reset (public)
 - `/calendar` - Main calendar view (requires: admin, manager, master)
+- `/masters` - Masters list (requires: admin, manager)
+- `/masters/:id` - Master detail/edit (requires: admin, manager)
+- `/salons` - Salons list (requires: admin)
+- `/salons/:id` - Salon detail/edit (requires: admin)
+- `/clients` - Clients list (requires: admin, manager, master)
+- `/clients/:id` - Client detail/edit (requires: admin, manager, master)
 - `/forbidden` - Access denied page
 - `/` - Redirects to calendar
 
@@ -104,20 +126,29 @@ SESSION_SECRET=already_configured
 
 ## Known Issues & Next Steps
 
+### Known Limitations
+1. **BaseDatePicker i18n**: Currently uses English month names and Sunday-first week start
+   - Need to implement locale-specific date formatting using date-fns locales
+   - Need to respect locale-specific week start (Monday for ES/RU, Sunday for EN)
+2. **Management Pages**: Currently use mock data for demonstration
+   - Ready for Firebase integration when credentials are configured
+   - Need to implement actual CRUD operations with Firestore
+
 ### Required for Production
 1. **Firebase Credentials**: Add Firebase configuration via Replit secrets
-2. **Email Templates**: Configure Firebase email templates for password reset
-3. **Role Assignment**: Implement admin interface for assigning user roles
+2. **BaseDatePicker Localization**: Implement full locale support (week start, formatting)
+3. **Data Persistence**: Connect management pages to Firebase Firestore
+4. **Email Templates**: Configure Firebase email templates for password reset
+5. **Role Assignment**: Implement admin interface for assigning user roles
 
 ### Future Enhancements
-1. Complete calendar functionality (drag-and-drop, month/week/day views)
-2. Masters management pages
-3. Salons management pages
-4. Clients management pages
-5. Appointment booking flow
-6. Real-time updates with Firebase listeners
-7. Mobile-responsive design optimization
-8. Unit and E2E tests
+1. Complete calendar functionality (drag-and-drop appointments)
+2. Real-time appointment updates with Firebase listeners
+3. Appointment booking flow with client interface
+4. Mobile-responsive design optimization
+5. Export/import functionality (CSV, iCal)
+6. Email/SMS notifications for appointments
+7. Unit and E2E tests
 
 ## Development Notes
 - Using TailwindCSS v3 (not v4) for PostCSS compatibility
