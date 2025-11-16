@@ -101,7 +101,11 @@
     "appointmentUpdated": "Appointment updated successfully",
     "appointmentDeleted": "Appointment deleted successfully",
     "filterByMaster": "Master",
-    "filterByStatus": "Status"
+    "filterByStatus": "Status",
+    "dragToReschedule": "Drag to reschedule",
+    "allDay": "All Day",
+    "noAppointments": "No appointments",
+    "selectView": "Select View"
   },
   "appointments": {
     "title": "Appointments",

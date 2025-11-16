@@ -101,7 +101,11 @@
     "appointmentUpdated": "Cita actualizada exitosamente",
     "appointmentDeleted": "Cita eliminada exitosamente",
     "filterByMaster": "Maestro",
-    "filterByStatus": "Estado"
+    "filterByStatus": "Estado",
+    "dragToReschedule": "Arrastra para reprogramar",
+    "allDay": "Todo el día",
+    "noAppointments": "Sin citas",
+    "selectView": "Seleccionar Vista"
   },
   "appointments": {
     "title": "Citas",
