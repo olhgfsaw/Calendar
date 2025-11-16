@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <label v-if="label" class="block text-sm font-medium mb-2">
+    <label v-if="label" class="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
       {{ label }}
       <span v-if="required" class="text-red-500">*</span>
     </label>
@@ -43,7 +43,7 @@
       >
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 text-center">
+            <div class="text-xs text-gray-500 dark:text-gray-300 mb-2 text-center">
               {{ t('common.hour') }}
             </div>
             <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded">
@@ -61,7 +61,7 @@
           </div>
 
           <div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 text-center">
+            <div class="text-xs text-gray-500 dark:text-gray-300 mb-2 text-center">
               {{ t('common.minute') }}
             </div>
             <div class="max-h-48 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded">
@@ -99,7 +99,7 @@
     </transition>
 
     <p v-if="error" class="mt-1 text-sm text-red-500">{{ error }}</p>
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ hint }}</p>
+    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ hint }}</p>
   </div>
 </template>
 
