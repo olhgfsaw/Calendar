@@ -19,6 +19,9 @@
     "submit": "Submit",
     "today": "Today",
     "clear": "Clear",
+    "all": "All",
+    "clearFilters": "Clear Filters",
+    "create": "Create",
     "hour": "Hour",
     "minute": "Minute",
     "locale": "en-US",
@@ -87,7 +90,10 @@
     "notes": "Notes",
     "status": "Status",
     "appointmentCreated": "Appointment created successfully",
-    "appointmentUpdated": "Appointment updated successfully"
+    "appointmentUpdated": "Appointment updated successfully",
+    "appointmentDeleted": "Appointment deleted successfully",
+    "filterByMaster": "Master",
+    "filterByStatus": "Status"
   },
   "appointments": {
     "title": "Appointments",
