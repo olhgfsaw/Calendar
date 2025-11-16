@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <label v-if="label" class="block text-sm font-medium mb-2">
+    <label v-if="label" class="block text-sm font-medium text-gray-700 dark:text-gray-100 mb-2">
       {{ label }}
       <span v-if="required" class="text-red-500">*</span>
     </label>
@@ -71,7 +71,7 @@
           <div
             v-for="day in weekDays"
             :key="day"
-            class="text-center text-xs font-medium text-gray-500 dark:text-gray-400 py-1"
+            class="text-center text-xs font-medium text-gray-500 dark:text-gray-300 py-1"
           >
             {{ day }}
           </div>
@@ -86,7 +86,7 @@
             :class="[
               date.isCurrentMonth 
                 ? 'text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700' 
-                : 'text-gray-400 dark:text-gray-600',
+                : 'text-gray-400 dark:text-gray-500',
               date.isToday && 'font-bold border border-blue-500',
               date.isSelected && 'bg-blue-500 text-white hover:bg-blue-600',
               !date.isCurrentMonth && 'opacity-50'

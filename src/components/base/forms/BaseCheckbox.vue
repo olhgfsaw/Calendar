@@ -8,7 +8,7 @@
       :class="checkboxClasses"
       @change="handleChange"
     />
-    <label v-if="label" :for="id" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
+    <label v-if="label" :for="id" class="ml-2 text-sm text-gray-700 dark:text-gray-100">
       {{ label }}
     </label>
   </div>

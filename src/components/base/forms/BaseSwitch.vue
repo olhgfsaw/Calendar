@@ -8,7 +8,7 @@
     >
       <span :class="thumbClasses"></span>
     </button>
-    <label v-if="label" class="ml-3 text-sm text-gray-700 dark:text-gray-300">
+    <label v-if="label" class="ml-3 text-sm text-gray-700 dark:text-gray-100">
       {{ label }}
     </label>
   </div>
