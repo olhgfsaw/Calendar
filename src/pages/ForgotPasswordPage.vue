@@ -5,7 +5,7 @@
       Enter your email address and we'll send you a link to reset your password.
     </p>
     
-    <form @submit.prevent="handleReset" class="space-y-4">
+    <form @submit="onSubmit" class="space-y-4">
       <BaseInput
         v-model="email"
         type="email"
@@ -34,31 +34,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import { useI18n } from 'vue-i18n'
+import { useForm } from 'vee-validate'
+import { emailValidator } from '@/utils/validators'
+import * as yup from 'yup'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
 const { t } = useI18n()
 
-const email = ref('')
-const errors = ref<{ email?: string }>({})
+const validationSchema = yup.object({
+  email: emailValidator,
+})
 
-const handleReset = async () => {
-  errors.value = {}
-  
-  if (!email.value) {
-    errors.value.email = t('validation.email.required')
-    return
-  }
-  
-  const success = await authStore.resetPassword(email.value)
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema,
+})
+
+const [email] = defineField('email', { initialValue: '' })
+
+const onSubmit = handleSubmit(async (values) => {
+  const success = await authStore.resetPassword(values.email)
   
   if (success) {
     notificationsStore.showToast('success', t('auth.resetEmailSent'))
@@ -66,5 +68,5 @@ const handleReset = async () => {
   } else {
     notificationsStore.showToast('error', authStore.error || 'Reset failed')
   }
-}
+})
 </script>

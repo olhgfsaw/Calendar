@@ -2,7 +2,7 @@
   <div>
     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('auth.register') }}</h2>
     
-    <form @submit.prevent="handleRegister" class="space-y-4">
+    <form @submit="onSubmit" class="space-y-4">
       <BaseInput
         v-model="displayName"
         type="text"
@@ -59,54 +59,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import { useI18n } from 'vue-i18n'
+import { useForm } from 'vee-validate'
+import { emailValidator, passwordValidator, nameValidator } from '@/utils/validators'
+import * as yup from 'yup'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
 const { t } = useI18n()
 
-const displayName = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const errors = ref<Record<string, string>>({})
+const validationSchema = yup.object({
+  displayName: nameValidator,
+  email: emailValidator,
+  password: passwordValidator,
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], t('validation.password.match'))
+    .required(t('validation.password.required')),
+})
 
-const handleRegister = async () => {
-  errors.value = {}
-  
-  if (!displayName.value) {
-    errors.value.displayName = t('validation.name.required')
-    return
-  }
-  
-  if (!email.value) {
-    errors.value.email = t('validation.email.required')
-    return
-  }
-  
-  if (!password.value) {
-    errors.value.password = t('validation.password.required')
-    return
-  }
-  
-  if (password.value.length < 6) {
-    errors.value.password = t('validation.password.minLength')
-    return
-  }
-  
-  if (password.value !== confirmPassword.value) {
-    errors.value.confirmPassword = 'Passwords do not match'
-    return
-  }
-  
-  const success = await authStore.register(email.value, password.value, displayName.value)
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema,
+})
+
+const [displayName] = defineField('displayName', { initialValue: '' })
+const [email] = defineField('email', { initialValue: '' })
+const [password] = defineField('password', { initialValue: '' })
+const [confirmPassword] = defineField('confirmPassword', { initialValue: '' })
+
+const onSubmit = handleSubmit(async (values) => {
+  const success = await authStore.register(values.email, values.password, values.displayName)
   
   if (success) {
     notificationsStore.showToast('success', t('auth.registerSuccess'))
@@ -114,5 +102,5 @@ const handleRegister = async () => {
   } else {
     notificationsStore.showToast('error', authStore.error || 'Registration failed')
   }
-}
+})
 </script>

@@ -1,5 +1,7 @@
 {
   "common": {
+    "appName": "Calendario del Salón",
+    "name": "Nombre",
     "save": "Guardar",
     "cancel": "Cancelar",
     "delete": "Eliminar",
@@ -114,7 +116,8 @@
     },
     "password": {
       "required": "La contraseña es obligatoria",
-      "minLength": "La contraseña debe tener al menos 6 caracteres"
+      "minLength": "La contraseña debe tener al menos 6 caracteres",
+      "match": "Las contraseñas deben coincidir"
     },
     "phone": {
       "required": "El teléfono es obligatorio",
@@ -134,6 +137,8 @@
     }
   },
   "notifications": {
+    "title": "Notificaciones",
+    "noNotifications": "Sin notificaciones",
     "appointmentCreated": "Cita creada exitosamente",
     "appointmentUpdated": "Cita actualizada exitosamente",
     "appointmentDeleted": "Cita eliminada exitosamente",
@@ -141,6 +146,7 @@
     "success": "Operación completada exitosamente"
   },
   "theme": {
+    "toggle": "Cambiar tema",
     "light": "Claro",
     "dark": "Oscuro",
     "auto": "Automático"

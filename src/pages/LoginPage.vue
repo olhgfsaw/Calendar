@@ -2,7 +2,7 @@
   <div>
     <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ $t('auth.login') }}</h2>
     
-    <form @submit.prevent="handleLogin" class="space-y-4">
+    <form @submit="onSubmit" class="space-y-4">
       <BaseInput
         v-model="email"
         type="email"
@@ -47,37 +47,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useNotificationsStore } from '@/stores/notifications'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import { useI18n } from 'vue-i18n'
+import { useForm } from 'vee-validate'
+import { emailValidator, passwordValidator } from '@/utils/validators'
+import * as yup from 'yup'
 
 const router = useRouter()
 const authStore = useAuthStore()
 const notificationsStore = useNotificationsStore()
 const { t } = useI18n()
 
-const email = ref('')
-const password = ref('')
-const errors = ref<{ email?: string; password?: string }>({})
+const validationSchema = yup.object({
+  email: emailValidator,
+  password: passwordValidator,
+})
 
-const handleLogin = async () => {
-  errors.value = {}
-  
-  if (!email.value) {
-    errors.value.email = t('validation.email.required')
-    return
-  }
-  
-  if (!password.value) {
-    errors.value.password = t('validation.password.required')
-    return
-  }
-  
-  const success = await authStore.login(email.value, password.value)
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema,
+})
+
+const [email] = defineField('email', { initialValue: '' })
+const [password] = defineField('password', { initialValue: '' })
+
+const onSubmit = handleSubmit(async (values) => {
+  const success = await authStore.login(values.email, values.password)
   
   if (success) {
     notificationsStore.showToast('success', t('auth.loginSuccess'))
@@ -85,5 +83,5 @@ const handleLogin = async () => {
   } else {
     notificationsStore.showToast('error', authStore.error || 'Login failed')
   }
-}
+})
 </script>

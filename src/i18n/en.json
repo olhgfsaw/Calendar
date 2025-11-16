@@ -1,5 +1,7 @@
 {
   "common": {
+    "appName": "Salon Calendar",
+    "name": "Name",
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
@@ -114,7 +116,8 @@
     },
     "password": {
       "required": "Password is required",
-      "minLength": "Password must be at least 6 characters"
+      "minLength": "Password must be at least 6 characters",
+      "match": "Passwords must match"
     },
     "phone": {
       "required": "Phone is required",
@@ -134,6 +137,8 @@
     }
   },
   "notifications": {
+    "title": "Notifications",
+    "noNotifications": "No notifications",
     "appointmentCreated": "Appointment created successfully",
     "appointmentUpdated": "Appointment updated successfully",
     "appointmentDeleted": "Appointment deleted successfully",
@@ -141,6 +146,7 @@
     "success": "Operation completed successfully"
   },
   "theme": {
+    "toggle": "Toggle theme",
     "light": "Light",
     "dark": "Dark",
     "auto": "Auto"
