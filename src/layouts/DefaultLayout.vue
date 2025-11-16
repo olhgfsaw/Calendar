@@ -16,10 +16,10 @@
             :key="item.path"
             :to="item.path"
             class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors"
-            active-class="bg-primary-50 text-primary-700 dark:bg-primary-900 dark:text-primary-200"
-            inactive-class="text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+            active-class="bg-primary-50 text-primary-700 dark:bg-primary-900 dark:text-primary-100"
+            inactive-class="text-gray-700 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700"
           >
-            <component :is="item.icon" class="w-5 h-5" />
+            <component :is="item.icon" class="w-5 h-5 flex-shrink-0" />
             <span v-if="!uiStore.sidebarCollapsed">{{ $t(item.label) }}</span>
           </router-link>
         </nav>
@@ -77,16 +77,22 @@ import LanguageSwitcher from '@/components/base/layoutPieces/LanguageSwitcher.vu
 import NotificationBell from '@/components/base/layoutPieces/NotificationBell.vue'
 import Avatar from '@/components/base/layoutPieces/Avatar.vue'
 import { useRouter } from 'vue-router'
+import { 
+  CalendarDaysIcon, 
+  UsersIcon, 
+  BuildingStorefrontIcon, 
+  UserGroupIcon 
+} from '@heroicons/vue/24/outline'
 
 const authStore = useAuthStore()
 const uiStore = useUiStore()
 const router = useRouter()
 
 const navigation = [
-  { path: '/calendar', label: 'nav.calendar', icon: 'svg' },
-  { path: '/masters', label: 'nav.masters', icon: 'svg' },
-  { path: '/salons', label: 'nav.salons', icon: 'svg' },
-  { path: '/clients', label: 'nav.clients', icon: 'svg' },
+  { path: '/calendar', label: 'nav.calendar', icon: CalendarDaysIcon },
+  { path: '/masters', label: 'nav.masters', icon: UsersIcon },
+  { path: '/salons', label: 'nav.salons', icon: BuildingStorefrontIcon },
+  { path: '/clients', label: 'nav.clients', icon: UserGroupIcon },
 ]
 
 const logout = async () => {
