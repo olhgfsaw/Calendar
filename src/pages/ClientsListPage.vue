@@ -15,92 +15,55 @@
       </PrimaryButton>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
-      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-        <BaseInput v-model="searchQuery" :placeholder="t('common.search')" type="text">
-          <template #prefix>
-            <svg
-              class="w-5 h-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </template>
-        </BaseInput>
-      </div>
-
-      <div v-if="loading" class="p-8 text-center text-gray-500">
-        {{ t('common.loading') }}
-      </div>
-
-      <div v-else-if="filteredClients.length === 0" class="p-8 text-center text-gray-500">
-        {{ t('common.noData') }}
-      </div>
-
-      <div v-else class="overflow-x-auto">
-        <table class="w-full">
-          <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                {{ t('clients.name') }}
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                {{ t('clients.phone') }}
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                {{ t('clients.email') }}
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                {{ t('clients.lastVisit') }}
-              </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                {{ t('clients.totalAppointments') }}
-              </th>
-              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                {{ t('common.edit') }}
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-            <tr
-              v-for="client in filteredClients"
-              :key="client.id"
-              class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors cursor-pointer"
-              @click="viewClient(client.id)"
-            >
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <Avatar :name="`${client.firstName} ${client.lastName}`" size="sm" />
-                  <span class="ml-3 font-medium">{{ client.firstName }} {{ client.lastName }}</span>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                {{ client.phone }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                {{ client.email }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                {{ client.lastVisit }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
-                {{ client.totalAppointments }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                <IconButton icon="pencil" @click.stop="editClient(client.id)" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+      <BaseInput v-model="searchQuery" :placeholder="t('common.search')" type="text">
+        <template #prefix>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </template>
+      </BaseInput>
     </div>
+
+    <BaseDataTable
+      :columns="columns"
+      :data="filteredClients"
+      :loading="loading"
+      :page-size="10"
+      @row-click="viewClient"
+    >
+      <template #cell-name="{ item }">
+        <div class="flex items-center">
+          <Avatar :name="`${item.firstName} ${item.lastName}`" size="sm" />
+          <span class="ml-3 font-medium">{{ item.firstName }} {{ item.lastName }}</span>
+        </div>
+      </template>
+
+      <template #cell-phone="{ value }">
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ value }}</span>
+      </template>
+
+      <template #cell-email="{ value }">
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ value }}</span>
+      </template>
+
+      <template #cell-lastVisit="{ value }">
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ value }}</span>
+      </template>
+
+      <template #cell-totalAppointments="{ value }">
+        <span class="text-sm text-gray-600 dark:text-gray-400">{{ value }}</span>
+      </template>
+
+      <template #cell-actions="{ item }">
+        <IconButton icon="pencil" @click.stop="editClient(item.id)" />
+      </template>
+    </BaseDataTable>
   </div>
 </template>
 
@@ -112,6 +75,7 @@ import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import IconButton from '@/components/base/buttons/IconButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import Avatar from '@/components/base/layoutPieces/Avatar.vue'
+import BaseDataTable from '@/components/base/BaseDataTable.vue'
 
 interface Client {
   id: string
@@ -129,7 +93,16 @@ const router = useRouter()
 const searchQuery = ref('')
 const loading = ref(false)
 
-const clients = ref<Client[]>([
+const columns = [
+  { key: 'name', label: t('common.name'), width: '2fr' },
+  { key: 'phone', label: t('clients.phone'), width: '1.5fr' },
+  { key: 'email', label: t('clients.email'), width: '2fr' },
+  { key: 'lastVisit', label: t('clients.lastVisit'), width: '1.5fr' },
+  { key: 'totalAppointments', label: t('clients.totalAppointments'), width: '1fr' },
+  { key: 'actions', label: t('common.edit'), width: '80px', align: 'right', sortable: false },
+]
+
+const clientsRaw = ref<Client[]>([
   {
     id: '1',
     firstName: 'Emma',
@@ -157,7 +130,104 @@ const clients = ref<Client[]>([
     lastVisit: '2024-02-28',
     totalAppointments: 5,
   },
+  {
+    id: '4',
+    firstName: 'Michael',
+    lastName: 'Brown',
+    phone: '+1 (555) 777-8888',
+    email: 'michael.brown@email.com',
+    lastVisit: '2024-03-12',
+    totalAppointments: 15,
+  },
+  {
+    id: '5',
+    firstName: 'Sophia',
+    lastName: 'Davis',
+    phone: '+1 (555) 888-9999',
+    email: 'sophia.davis@email.com',
+    lastVisit: '2024-03-08',
+    totalAppointments: 3,
+  },
+  {
+    id: '6',
+    firstName: 'Daniel',
+    lastName: 'Wilson',
+    phone: '+1 (555) 999-1111',
+    email: 'daniel.wilson@email.com',
+    lastVisit: '2024-03-05',
+    totalAppointments: 7,
+  },
+  {
+    id: '7',
+    firstName: 'Olivia',
+    lastName: 'Taylor',
+    phone: '+1 (555) 111-2222',
+    email: 'olivia.taylor@email.com',
+    lastVisit: '2024-02-25',
+    totalAppointments: 10,
+  },
+  {
+    id: '8',
+    firstName: 'James',
+    lastName: 'Martinez',
+    phone: '+1 (555) 222-3334',
+    email: 'james.martinez@email.com',
+    lastVisit: '2024-03-14',
+    totalAppointments: 6,
+  },
+  {
+    id: '9',
+    firstName: 'Isabella',
+    lastName: 'Garcia',
+    phone: '+1 (555) 333-4445',
+    email: 'isabella.garcia@email.com',
+    lastVisit: '2024-03-11',
+    totalAppointments: 9,
+  },
+  {
+    id: '10',
+    firstName: 'William',
+    lastName: 'Rodriguez',
+    phone: '+1 (555) 444-5556',
+    email: 'william.rodriguez@email.com',
+    lastVisit: '2024-03-07',
+    totalAppointments: 4,
+  },
+  {
+    id: '11',
+    firstName: 'Mia',
+    lastName: 'Hernandez',
+    phone: '+1 (555) 555-6667',
+    email: 'mia.hernandez@email.com',
+    lastVisit: '2024-03-13',
+    totalAppointments: 11,
+  },
+  {
+    id: '12',
+    firstName: 'David',
+    lastName: 'Lopez',
+    phone: '+1 (555) 666-7778',
+    email: 'david.lopez@email.com',
+    lastVisit: '2024-03-01',
+    totalAppointments: 2,
+  },
+  {
+    id: '13',
+    firstName: 'Charlotte',
+    lastName: 'Gonzalez',
+    phone: '+1 (555) 777-8889',
+    email: 'charlotte.gonzalez@email.com',
+    lastVisit: '2024-02-20',
+    totalAppointments: 14,
+  },
 ])
+
+const clients = computed(() => {
+  return clientsRaw.value.map(client => ({
+    ...client,
+    name: `${client.firstName} ${client.lastName}`
+  }))
+})
 
 const filteredClients = computed(() => {
   if (!searchQuery.value) return clients.value
@@ -176,8 +246,8 @@ const createClient = () => {
   router.push('/clients/new')
 }
 
-const viewClient = (id: string) => {
-  router.push(`/clients/${id}`)
+const viewClient = (client: Client) => {
+  router.push(`/clients/${client.id}`)
 }
 
 const editClient = (id: string) => {

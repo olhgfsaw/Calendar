@@ -40,6 +40,14 @@
     "fri": "Пт",
     "sat": "Сб"
   },
+  "pagination": {
+    "showing": "Показано",
+    "to": "до",
+    "of": "из",
+    "results": "результатов",
+    "previous": "Назад",
+    "next": "Далее"
+  },
   "nav": {
     "calendar": "Календарь",
     "masters": "Мастера",

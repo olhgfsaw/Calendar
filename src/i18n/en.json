@@ -40,6 +40,14 @@
     "fri": "Fr",
     "sat": "Sa"
   },
+  "pagination": {
+    "showing": "Showing",
+    "to": "to",
+    "of": "of",
+    "results": "results",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "nav": {
     "calendar": "Calendar",
     "masters": "Masters",
