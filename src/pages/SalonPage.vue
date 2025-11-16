@@ -24,14 +24,14 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BaseInput
-          v-model="form.name"
+          v-model="name"
           :label="t('salons.name')"
           :error="errors.name"
           required
         />
         
         <BaseInput
-          v-model="form.phone"
+          v-model="phone"
           :label="t('salons.phone')"
           :error="errors.phone"
           type="tel"
@@ -39,7 +39,7 @@
         />
         
         <BaseInput
-          v-model="form.email"
+          v-model="email"
           :label="t('salons.email')"
           :error="errors.email"
           type="email"
@@ -47,14 +47,14 @@
         />
 
         <BaseInput
-          v-model="form.city"
+          v-model="city"
           :label="t('salons.city')"
           :error="errors.city"
           required
         />
 
         <BaseInput
-          v-model="form.country"
+          v-model="country"
           :label="t('salons.country')"
           :error="errors.country"
           required
@@ -62,7 +62,7 @@
       </div>
 
       <BaseInput
-        v-model="form.address"
+        v-model="address"
         :label="t('salons.address')"
         :error="errors.address"
         required
@@ -70,20 +70,20 @@
 
       <div>
         <BaseTextarea
-          v-model="form.workingHours"
+          v-model="workingHours"
           :label="t('salons.workingHours')"
           :error="errors.workingHours"
-          rows="3"
+          :rows="3"
           :placeholder="t('salons.workingHoursPlaceholder')"
         />
       </div>
 
       <div>
         <BaseTextarea
-          v-model="form.description"
+          v-model="description"
           :label="t('salons.description')"
           :error="errors.description"
-          rows="4"
+          :rows="4"
           :placeholder="t('salons.descriptionPlaceholder')"
         />
       </div>
@@ -102,12 +102,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
 import { useNotificationsStore } from '@/stores/notifications'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import TextButton from '@/components/base/buttons/TextButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import BaseTextarea from '@/components/base/forms/BaseTextarea.vue'
 import ConfirmModal from '@/components/base/modals/ConfirmModal.vue'
+import { salonSchema } from '@/utils/validators'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -116,57 +119,32 @@ const notificationsStore = useNotificationsStore()
 
 const showDeleteConfirm = ref(false)
 
-const form = ref({
-  name: '',
-  address: '',
-  city: '',
-  country: '',
-  phone: '',
-  email: '',
-  workingHours: '',
-  description: '',
+const { defineField, handleSubmit, errors, setValues } = useForm({
+  validationSchema: toTypedSchema(salonSchema),
+  initialValues: {
+    name: '',
+    address: '',
+    city: '',
+    country: '',
+    phone: '',
+    email: '',
+    workingHours: '',
+    description: '',
+  },
 })
 
-const errors = ref<Record<string, string>>({})
+const [name] = defineField('name')
+const [address] = defineField('address')
+const [city] = defineField('city')
+const [country] = defineField('country')
+const [phone] = defineField('phone')
+const [email] = defineField('email')
+const [workingHours] = defineField('workingHours')
+const [description] = defineField('description')
 
 const isNewSalon = computed(() => route.params.id === 'new')
 
-const validate = (): boolean => {
-  errors.value = {}
-  
-  if (!form.value.name) {
-    errors.value.name = t('validation.name.required')
-  }
-  
-  if (!form.value.phone) {
-    errors.value.phone = t('validation.phone.required')
-  }
-  
-  if (!form.value.email) {
-    errors.value.email = t('validation.email.required')
-  }
-  
-  if (!form.value.address) {
-    errors.value.address = t('validation.required')
-  }
-  
-  if (!form.value.city) {
-    errors.value.city = t('validation.required')
-  }
-  
-  if (!form.value.country) {
-    errors.value.country = t('validation.required')
-  }
-  
-  return Object.keys(errors.value).length === 0
-}
-
-const onSubmit = () => {
-  if (!validate()) {
-    notificationsStore.error(t('validation.formErrors'))
-    return
-  }
-  
+const onSubmit = handleSubmit((values) => {
   notificationsStore.success(
     isNewSalon.value 
       ? t('salons.salonCreated') 
@@ -174,7 +152,7 @@ const onSubmit = () => {
   )
   
   router.push('/salons')
-}
+})
 
 const confirmDelete = () => {
   showDeleteConfirm.value = true
@@ -187,7 +165,7 @@ const deleteSalon = () => {
 
 onMounted(() => {
   if (!isNewSalon.value) {
-    form.value = {
+    setValues({
       name: 'Downtown Beauty Salon',
       address: '123 Main Street',
       city: 'New York',
@@ -196,7 +174,7 @@ onMounted(() => {
       email: 'info@downtown-salon.com',
       workingHours: 'Mon-Fri: 9:00-20:00, Sat-Sun: 10:00-18:00',
       description: 'Full-service beauty salon in the heart of downtown.',
-    }
+    })
   }
 })
 </script>

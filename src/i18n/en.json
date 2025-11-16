@@ -219,6 +219,34 @@
     "date": {
       "required": "Date is required"
     },
+    "client": {
+      "required": "Client is required"
+    },
+    "master": {
+      "required": "Master is required"
+    },
+    "service": {
+      "required": "Service is required"
+    },
+    "status": {
+      "required": "Status is required"
+    },
+    "specialization": {
+      "required": "Specialization is required"
+    },
+    "address": {
+      "minLength": "Address must be at least 5 characters",
+      "required": "Address is required"
+    },
+    "city": {
+      "required": "City is required"
+    },
+    "country": {
+      "required": "Country is required"
+    },
+    "url": {
+      "invalid": "URL is invalid"
+    },
     "required": "This field is required",
     "formErrors": "Please fix the errors in the form"
   },
