@@ -28,42 +28,49 @@ const router = createRouter({
       path: '/calendar',
       name: 'calendar',
       component: () => import('@/pages/CalendarPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
       path: '/masters',
       name: 'masters',
       component: () => import('@/pages/MastersListPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
     },
     {
       path: '/masters/:id',
       name: 'master',
       component: () => import('@/pages/MasterPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager'] },
     },
     {
       path: '/salons',
       name: 'salons',
       component: () => import('@/pages/SalonsListPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
     },
     {
       path: '/salons/:id',
       name: 'salon',
       component: () => import('@/pages/SalonPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin'] },
     },
     {
       path: '/clients',
       name: 'clients',
       component: () => import('@/pages/ClientsListPage.vue'),
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
+      meta: { layout: 'default', requiresAuth: false },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
       path: '/clients/:id',
       name: 'client',
       component: () => import('@/pages/ClientPage.vue'),
+      meta: { layout: 'default', requiresAuth: false },
       meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
@@ -87,33 +94,33 @@ const router = createRouter({
 
 router.beforeEach(async (to, _from, next) => {
   const authStore = useAuthStore()
-  
+
   if (authStore.loading) {
     await authStore.initAuth()
   }
-  
+
   const requiresAuth = to.meta.requiresAuth !== false
-  
+
   if (requiresAuth && !authStore.isAuthenticated) {
     next('/login')
     return
   }
-  
+
   if ((to.path === '/login' || to.path === '/join') && authStore.isAuthenticated) {
     next('/calendar')
     return
   }
-  
+
   if (requiresAuth && to.meta.roles) {
     const allowedRoles = to.meta.roles as UserRole[]
     const userRole = authStore.userRole as UserRole
-    
+
     if (!checkPermission(userRole, allowedRoles)) {
       next('/forbidden')
       return
     }
   }
-  
+
   next()
 })
 

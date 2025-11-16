@@ -4,7 +4,12 @@
       <h1 class="text-2xl font-bold">{{ t('clients.title') }}</h1>
       <PrimaryButton @click="createClient">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
         </svg>
         {{ t('clients.addClient') }}
       </PrimaryButton>
@@ -12,14 +17,20 @@
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-        <BaseInput
-          v-model="searchQuery"
-          :placeholder="t('common.search')"
-          type="text"
-        >
+        <BaseInput v-model="searchQuery" :placeholder="t('common.search')" type="text">
           <template #prefix>
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              class="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </template>
         </BaseInput>
@@ -83,10 +94,7 @@
                 {{ client.totalAppointments }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                <IconButton
-                  icon="pencil"
-                  @click.stop="editClient(client.id)"
-                />
+                <IconButton icon="pencil" @click.stop="editClient(client.id)" />
               </td>
             </tr>
           </tbody>
@@ -103,7 +111,7 @@ import { useI18n } from 'vue-i18n'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import IconButton from '@/components/base/buttons/IconButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
-import Avatar from '@/components/base/layout-pieces/Avatar.vue'
+import Avatar from '@/components/base/layoutPieces/Avatar.vue'
 
 interface Client {
   id: string
@@ -153,14 +161,14 @@ const clients = ref<Client[]>([
 
 const filteredClients = computed(() => {
   if (!searchQuery.value) return clients.value
-  
+
   const query = searchQuery.value.toLowerCase()
   return clients.value.filter(
     (client) =>
       client.firstName.toLowerCase().includes(query) ||
       client.lastName.toLowerCase().includes(query) ||
       client.email.toLowerCase().includes(query) ||
-      client.phone.includes(query)
+      client.phone.includes(query),
   )
 })
 

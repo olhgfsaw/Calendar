@@ -22,11 +22,11 @@ author = "agent"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-waitForPort = 5000
+waitForPort = 4000
 
 [workflows.workflow.metadata]
 outputType = "webview"
 
 [[ports]]
-localPort = 5000
+localPort = 4000
 externalPort = 80

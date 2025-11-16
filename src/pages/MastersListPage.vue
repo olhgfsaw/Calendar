@@ -4,7 +4,12 @@
       <h1 class="text-2xl font-bold">{{ t('masters.title') }}</h1>
       <PrimaryButton @click="createMaster">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
         </svg>
         {{ t('masters.addMaster') }}
       </PrimaryButton>
@@ -12,14 +17,20 @@
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
       <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-        <BaseInput
-          v-model="searchQuery"
-          :placeholder="t('common.search')"
-          type="text"
-        >
+        <BaseInput v-model="searchQuery" :placeholder="t('common.search')" type="text">
           <template #prefix>
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg
+              class="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
             </svg>
           </template>
         </BaseInput>
@@ -82,16 +93,17 @@
               <td class="px-6 py-4 whitespace-nowrap">
                 <span
                   class="px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="master.isActive ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'"
+                  :class="
+                    master.isActive
+                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                  "
                 >
                   {{ master.isActive ? t('masters.active') : t('masters.inactive') }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                <IconButton
-                  icon="pencil"
-                  @click.stop="editMaster(master.id)"
-                />
+                <IconButton icon="pencil" @click.stop="editMaster(master.id)" />
               </td>
             </tr>
           </tbody>
@@ -108,7 +120,7 @@ import { useI18n } from 'vue-i18n'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import IconButton from '@/components/base/buttons/IconButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
-import Avatar from '@/components/base/layout-pieces/Avatar.vue'
+import Avatar from '@/components/base/layoutPieces/Avatar.vue'
 
 interface Master {
   id: string
@@ -158,14 +170,14 @@ const masters = ref<Master[]>([
 
 const filteredMasters = computed(() => {
   if (!searchQuery.value) return masters.value
-  
+
   const query = searchQuery.value.toLowerCase()
   return masters.value.filter(
     (master) =>
       master.name.toLowerCase().includes(query) ||
       master.specialization.toLowerCase().includes(query) ||
       master.email.toLowerCase().includes(query) ||
-      master.phone.includes(query)
+      master.phone.includes(query),
   )
 })
 

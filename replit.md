@@ -40,7 +40,7 @@ A comprehensive calendar management application for beauty salons built with Vue
 - ✅ Created auth pages: Login, Join (Register), ForgotPassword, Forbidden
 - ✅ Implemented DefaultLayout with Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
 - ✅ Fixed TailwindCSS configuration issues
-- ✅ Configured dev server on port 5000
+- ✅ Configured dev server on port 4000
 
 ## Project Architecture
 
@@ -127,7 +127,7 @@ SESSION_SECRET=already_configured
 ```
 
 ### Development Server
-- Port: 5000
+- Port: 4000
 - Command: `npm run dev`
 - Vite configured to allow all hosts for Replit environment
 
@@ -157,4 +157,4 @@ SESSION_SECRET=already_configured
 - Using TailwindCSS v3 (not v4) for PostCSS compatibility
 - VeeValidate integrated in all authentication forms
 - Firebase integration ready, waiting for credentials
-- Dev server runs on port 5000 (required for Replit webview)
+- Dev server runs on port 4000 (required for Replit webview)
