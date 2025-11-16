@@ -76,7 +76,7 @@ import { useI18n } from 'vue-i18n'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import IconButton from '@/components/base/buttons/IconButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
-import Avatar from '@/components/base/layout-pieces/Avatar.vue'
+import Avatar from '@/components/base/layoutPieces/Avatar.vue'
 import BaseDataTable from '@/components/base/BaseDataTable.vue'
 
 interface Master {
@@ -129,6 +129,87 @@ const masters = ref<Master[]>([
     specialization: 'Makeup Artist',
     phone: '+1 (555) 456-7890',
     email: 'sophie@salon.com',
+    photoURL: '',
+    isActive: false,
+  },
+  {
+    id: '4',
+    name: 'Elena Ivanova',
+    specialization: 'Hair Colorist',
+    phone: '+1 (555) 234-5678',
+    email: 'elena@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '5',
+    name: 'Lisa Chen',
+    specialization: 'Massage Therapist',
+    phone: '+1 (555) 345-6789',
+    email: 'lisa@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '6',
+    name: 'Carmen Garcia',
+    specialization: 'Esthetician',
+    phone: '+1 (555) 456-7891',
+    email: 'carmen@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '7',
+    name: 'Natalia Kowalski',
+    specialization: 'Eyebrow Artist',
+    phone: '+1 (555) 567-8912',
+    email: 'natalia@salon.com',
+    photoURL: '',
+    isActive: false,
+  },
+  {
+    id: '8',
+    name: 'Sarah Johnson',
+    specialization: 'Hair Stylist',
+    phone: '+1 (555) 678-9123',
+    email: 'sarah@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '9',
+    name: 'Michelle Lee',
+    specialization: 'Nail Artist',
+    phone: '+1 (555) 789-1234',
+    email: 'michelle@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '10',
+    name: 'Julia Schmidt',
+    specialization: 'Lash Technician',
+    phone: '+1 (555) 891-2345',
+    email: 'julia@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '11',
+    name: 'Victoria Brown',
+    specialization: 'Makeup Artist',
+    phone: '+1 (555) 912-3456',
+    email: 'victoria@salon.com',
+    photoURL: '',
+    isActive: true,
+  },
+  {
+    id: '12',
+    name: 'Diana Kim',
+    specialization: 'Hair Stylist',
+    phone: '+1 (555) 123-4568',
+    email: 'diana@salon.com',
     photoURL: '',
     isActive: false,
   },

@@ -17,6 +17,24 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - Universal DataTable Component with Sorting & Pagination
+- ✅ **BaseDataTable Component**: Universal table component with advanced features
+  - Grid-based layout with dynamic columns (CSS grid)
+  - Locale-aware sorting with null-safe comparisons (localeCompare)
+  - Synchronous pagination with automatic page clamping
+  - Two view modes: table (grid layout) and grid (card view)
+  - Customizable cells via slots
+  - Support for 10+ items per page with navigation
+  - Fully internationalized (en, es, ru)
+  - Dark mode support
+- ✅ **Management Pages Refactored**: All list pages now use BaseDataTable
+  - MastersListPage: 12 masters with table view
+  - ClientsListPage: 13 clients with table view
+  - SalonsListPage: Grid view with cards
+  - Search functionality integrated with pagination
+  - Sorting by all columns (except actions/status)
+  - Responsive design for all screen sizes
+
 ### November 16, 2025 - Appointment Filtering & Deletion Complete
 - ✅ **Calendar Filters**: Master and Status filtering with full sync
   - Dropdown filters for master selection and appointment status

@@ -71,7 +71,7 @@ import { useI18n } from 'vue-i18n'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import IconButton from '@/components/base/buttons/IconButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
-import Avatar from '@/components/base/layout-pieces/Avatar.vue'
+import Avatar from '@/components/base/layoutPieces/Avatar.vue'
 import BaseDataTable from '@/components/base/BaseDataTable.vue'
 
 interface Client {
@@ -91,7 +91,7 @@ const searchQuery = ref('')
 const loading = ref(false)
 
 const columns = [
-  { key: 'name', label: t('clients.name'), width: '2fr' },
+  { key: 'name', label: t('common.name'), width: '2fr' },
   { key: 'phone', label: t('clients.phone'), width: '1.5fr' },
   { key: 'email', label: t('clients.email'), width: '2fr' },
   { key: 'lastVisit', label: t('clients.lastVisit'), width: '1.5fr' },
@@ -99,7 +99,7 @@ const columns = [
   { key: 'actions', label: t('common.edit'), width: '80px', align: 'right', sortable: false },
 ]
 
-const clients = ref<Client[]>([
+const clientsRaw = ref<Client[]>([
   {
     id: '1',
     firstName: 'Emma',
@@ -127,7 +127,104 @@ const clients = ref<Client[]>([
     lastVisit: '2024-02-28',
     totalAppointments: 5,
   },
+  {
+    id: '4',
+    firstName: 'Michael',
+    lastName: 'Brown',
+    phone: '+1 (555) 777-8888',
+    email: 'michael.brown@email.com',
+    lastVisit: '2024-03-12',
+    totalAppointments: 15,
+  },
+  {
+    id: '5',
+    firstName: 'Sophia',
+    lastName: 'Davis',
+    phone: '+1 (555) 888-9999',
+    email: 'sophia.davis@email.com',
+    lastVisit: '2024-03-08',
+    totalAppointments: 3,
+  },
+  {
+    id: '6',
+    firstName: 'Daniel',
+    lastName: 'Wilson',
+    phone: '+1 (555) 999-1111',
+    email: 'daniel.wilson@email.com',
+    lastVisit: '2024-03-05',
+    totalAppointments: 7,
+  },
+  {
+    id: '7',
+    firstName: 'Olivia',
+    lastName: 'Taylor',
+    phone: '+1 (555) 111-2222',
+    email: 'olivia.taylor@email.com',
+    lastVisit: '2024-02-25',
+    totalAppointments: 10,
+  },
+  {
+    id: '8',
+    firstName: 'James',
+    lastName: 'Martinez',
+    phone: '+1 (555) 222-3334',
+    email: 'james.martinez@email.com',
+    lastVisit: '2024-03-14',
+    totalAppointments: 6,
+  },
+  {
+    id: '9',
+    firstName: 'Isabella',
+    lastName: 'Garcia',
+    phone: '+1 (555) 333-4445',
+    email: 'isabella.garcia@email.com',
+    lastVisit: '2024-03-11',
+    totalAppointments: 9,
+  },
+  {
+    id: '10',
+    firstName: 'William',
+    lastName: 'Rodriguez',
+    phone: '+1 (555) 444-5556',
+    email: 'william.rodriguez@email.com',
+    lastVisit: '2024-03-07',
+    totalAppointments: 4,
+  },
+  {
+    id: '11',
+    firstName: 'Mia',
+    lastName: 'Hernandez',
+    phone: '+1 (555) 555-6667',
+    email: 'mia.hernandez@email.com',
+    lastVisit: '2024-03-13',
+    totalAppointments: 11,
+  },
+  {
+    id: '12',
+    firstName: 'David',
+    lastName: 'Lopez',
+    phone: '+1 (555) 666-7778',
+    email: 'david.lopez@email.com',
+    lastVisit: '2024-03-01',
+    totalAppointments: 2,
+  },
+  {
+    id: '13',
+    firstName: 'Charlotte',
+    lastName: 'Gonzalez',
+    phone: '+1 (555) 777-8889',
+    email: 'charlotte.gonzalez@email.com',
+    lastVisit: '2024-02-20',
+    totalAppointments: 14,
+  },
 ])
+
+const clients = computed(() => {
+  return clientsRaw.value.map(client => ({
+    ...client,
+    name: `${client.firstName} ${client.lastName}`
+  }))
+})
 
 const filteredClients = computed(() => {
   if (!searchQuery.value) return clients.value

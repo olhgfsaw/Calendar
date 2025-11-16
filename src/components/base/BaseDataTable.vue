@@ -127,7 +127,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 interface Column {
@@ -167,7 +167,7 @@ const { t } = useI18n()
 
 const sortKey = ref<string>('')
 const sortOrder = ref<'asc' | 'desc'>('asc')
-const currentPage = ref(1)
+const currentPageInput = ref(1)
 
 const gridTemplateColumns = computed(() => {
   if (props.columns.length === 0) return 'grid-template-columns: 1fr'
@@ -183,15 +183,30 @@ const sortedData = computed(() => {
     const aVal = a[sortKey.value]
     const bVal = b[sortKey.value]
 
+    if (aVal == null && bVal == null) return 0
+    if (aVal == null) return 1
+    if (bVal == null) return -1
+
     let comparison = 0
-    if (aVal > bVal) comparison = 1
-    if (aVal < bVal) comparison = -1
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      comparison = aVal.localeCompare(bVal, undefined, { sensitivity: 'base' })
+    } else {
+      if (aVal > bVal) comparison = 1
+      if (aVal < bVal) comparison = -1
+    }
 
     return sortOrder.value === 'asc' ? comparison : -comparison
   })
 })
 
 const totalPages = computed(() => Math.ceil(sortedData.value.length / props.pageSize))
+
+const currentPage = computed(() => {
+  if (totalPages.value === 0) return 1
+  if (currentPageInput.value > totalPages.value) return totalPages.value
+  if (currentPageInput.value < 1) return 1
+  return currentPageInput.value
+})
 
 const startIndex = computed(() => (currentPage.value - 1) * props.pageSize)
 const endIndex = computed(() => Math.min(startIndex.value + props.pageSize, sortedData.value.length))
@@ -224,12 +239,12 @@ const handleSort = (key: string) => {
     sortKey.value = key
     sortOrder.value = 'asc'
   }
-  currentPage.value = 1
+  currentPageInput.value = 1
 }
 
 const goToPage = (page: number) => {
   if (page >= 1 && page <= totalPages.value) {
-    currentPage.value = page
+    currentPageInput.value = page
   }
 }
 
