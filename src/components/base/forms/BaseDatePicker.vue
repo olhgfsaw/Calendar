@@ -124,7 +124,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, addMonths, subMonths } from 'date-fns'
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, addMonths, subMonths, startOfWeek, endOfWeek } from 'date-fns'
+import { enUS, es, ru, type Locale } from 'date-fns/locale'
 
 interface Props {
   modelValue?: Date | null
@@ -149,37 +150,55 @@ const emit = defineEmits<{
   'update:modelValue': [value: Date | null]
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const isOpen = ref(false)
 const currentMonth = ref(new Date())
 
+const currentLocale = computed(() => {
+  const localeMap: Record<string, Locale> = {
+    en: enUS,
+    es: es,
+    ru: ru,
+  }
+  return localeMap[locale.value] || enUS
+})
+
+const weekStartsOn = computed(() => {
+  return locale.value === 'en' ? 0 : 1
+})
+
 const weekDays = computed(() => {
-  return [
-    t('common.sunday').substring(0, 2),
-    t('common.monday').substring(0, 2),
-    t('common.tuesday').substring(0, 2),
-    t('common.wednesday').substring(0, 2),
-    t('common.thursday').substring(0, 2),
-    t('common.friday').substring(0, 2),
-    t('common.saturday').substring(0, 2),
+  const days = [
+    t('common.sun'),
+    t('common.mon'),
+    t('common.tue'),
+    t('common.wed'),
+    t('common.thu'),
+    t('common.fri'),
+    t('common.sat'),
   ]
+  
+  const start = weekStartsOn.value
+  return [...days.slice(start), ...days.slice(0, start)]
 })
 
 const currentMonthYear = computed(() => {
-  return format(currentMonth.value, 'MMMM yyyy')
+  return format(currentMonth.value, 'MMMM yyyy', { locale: currentLocale.value })
 })
 
 const formattedDate = computed(() => {
   if (!props.modelValue) return ''
-  return format(props.modelValue, 'MMM dd, yyyy')
+  return format(props.modelValue, 'PPP', { locale: currentLocale.value })
 })
 
 const calendarDates = computed(() => {
-  const start = startOfMonth(currentMonth.value)
-  const end = endOfMonth(currentMonth.value)
+  const monthStart = startOfMonth(currentMonth.value)
+  const monthEnd = endOfMonth(currentMonth.value)
   
-  const startDay = start.getDay()
+  const calendarStart = startOfWeek(monthStart, { weekStartsOn: weekStartsOn.value as 0 | 1 })
+  const calendarEnd = endOfWeek(monthEnd, { weekStartsOn: weekStartsOn.value as 0 | 1 })
+  
   const dates: Array<{
     date: Date
     day: number
@@ -188,42 +207,18 @@ const calendarDates = computed(() => {
     isSelected: boolean
   }> = []
 
-  const prevMonthEnd = endOfMonth(subMonths(currentMonth.value, 1))
-  for (let i = startDay - 1; i >= 0; i--) {
-    const date = new Date(prevMonthEnd)
-    date.setDate(prevMonthEnd.getDate() - i)
+  const allDates = eachDayOfInterval({ start: calendarStart, end: calendarEnd })
+  
+  allDates.forEach((date) => {
+    const isCurrentMonthDate = date >= monthStart && date <= monthEnd
     dates.push({
       date,
       day: date.getDate(),
-      isCurrentMonth: false,
-      isToday: isToday(date),
-      isSelected: props.modelValue ? isSameDay(date, props.modelValue) : false,
-    })
-  }
-
-  const monthDates = eachDayOfInterval({ start, end })
-  monthDates.forEach((date) => {
-    dates.push({
-      date,
-      day: date.getDate(),
-      isCurrentMonth: true,
+      isCurrentMonth: isCurrentMonthDate,
       isToday: isToday(date),
       isSelected: props.modelValue ? isSameDay(date, props.modelValue) : false,
     })
   })
-
-  const remainingDays = 42 - dates.length
-  for (let i = 1; i <= remainingDays; i++) {
-    const date = new Date(end)
-    date.setDate(end.getDate() + i)
-    dates.push({
-      date,
-      day: date.getDate(),
-      isCurrentMonth: false,
-      isToday: isToday(date),
-      isSelected: props.modelValue ? isSameDay(date, props.modelValue) : false,
-    })
-  }
 
   return dates
 })
