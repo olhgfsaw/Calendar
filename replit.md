@@ -17,6 +17,27 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - Appointment System Complete
+- ✅ **AppointmentCard Component**: Compact card for displaying appointments in calendar grid
+  - Status-based color coding (scheduled, confirmed, cancelled, completed, no-show)
+  - Shows client name, time, service, master
+  - Localized status badges
+- ✅ **AppointmentModal Component**: Full-featured form for creating/editing appointments
+  - Fields: client, master, service, date, start time, status, notes
+  - Integration with BaseDatePicker and BaseTimePicker
+  - Slot pre-filling: clicking calendar cells pre-fills date/time in form
+  - Form validation with error handling
+- ✅ **CalendarPage**: Complete weekly calendar view
+  - 7-day weekly grid with 12 working hours (8:00-19:00)
+  - Locale-aware week start (Sunday for EN, Monday for ES/RU)
+  - Week navigation (previous/next/today buttons)
+  - Click any time slot to create appointment at that specific time
+  - Appointments displayed in corresponding time slots
+  - Integration with calendar store for state management
+- ✅ **Translations**: Complete i18n for appointments (en, es, ru)
+  - Status labels, form fields, validation messages
+  - Calendar labels (today, new appointment, etc.)
+
 ### November 16, 2025 - Full Locale Support for BaseDatePicker  
 - ✅ Implemented complete locale-specific formatting using date-fns locales (enUS, es, ru)
 - ✅ Added locale-aware week start: Sunday for EN, Monday for ES/RU
@@ -48,12 +69,16 @@ A comprehensive calendar management application for beauty salons built with Vue
 ```
 src/
 ├── components/
-│   └── base/
-│       ├── buttons/         # PrimaryButton, IconButton, TextButton
-│       ├── forms/           # BaseInput, BaseTextarea, BaseSelect, BaseCheckbox, BaseSwitch
-│       │                    # BaseDatePicker, BaseTimePicker (30-min step support)
-│       ├── modals/          # BaseModal, ConfirmModal
-│       └── layoutPieces/    # Logo, Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
+│   ├── base/
+│   │   ├── buttons/         # PrimaryButton, IconButton, TextButton
+│   │   ├── forms/           # BaseInput, BaseTextarea, BaseSelect, BaseCheckbox, BaseSwitch
+│   │   │                    # BaseDatePicker, BaseTimePicker (30-min step support)
+│   │   ├── modals/          # BaseModal, ConfirmModal
+│   │   └── layoutPieces/    # Logo, Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
+│   └── calendar/
+│       ├── AppointmentCard.vue   # Appointment display card with status colors
+│       ├── AppointmentModal.vue  # Create/edit appointment modal form
+│       └── index.ts             # Calendar components exports
 ├── layouts/
 │   ├── DefaultLayout.vue    # Main application layout
 │   └── AuthLayout.vue       # Authentication pages layout
@@ -134,9 +159,17 @@ SESSION_SECRET=already_configured
 ## Known Issues & Next Steps
 
 ### Known Limitations
-1. **Management Pages**: Currently use mock data for demonstration
-   - Ready for Firebase integration when credentials are configured
-   - Need to implement actual CRUD operations with Firestore
+1. **Data Layer**: Currently uses mock data and local state for demonstration
+   - Calendar appointments stored in Pinia store (not persisted)
+   - Management pages (Masters, Salons, Clients) use mock data
+   - Ready for Firebase Firestore integration when credentials are configured
+2. **Appointment Features**: Core functionality complete, advanced features pending
+   - ✅ Create appointments via calendar grid click
+   - ✅ Edit existing appointments
+   - ✅ Status management (scheduled, confirmed, cancelled, completed, no-show)
+   - ⏳ Drag-and-drop rescheduling (not yet implemented)
+   - ⏳ Recurring appointments (not yet implemented)
+   - ⏳ Conflict detection and double-booking prevention (not yet implemented)
 
 ### Required for Production
 1. **Firebase Credentials**: Add Firebase configuration via Replit secrets
@@ -145,13 +178,20 @@ SESSION_SECRET=already_configured
 4. **Role Assignment**: Implement admin interface for assigning user roles
 
 ### Future Enhancements
-1. Complete calendar functionality (drag-and-drop appointments)
-2. Real-time appointment updates with Firebase listeners
-3. Appointment booking flow with client interface
-4. Mobile-responsive design optimization
-5. Export/import functionality (CSV, iCal)
-6. Email/SMS notifications for appointments
-7. Unit and E2E tests
+1. **Advanced Calendar Features**:
+   - Drag-and-drop appointment rescheduling
+   - Recurring appointments support
+   - Conflict detection and double-booking prevention
+   - Month/day view modes (currently only week view)
+   - Filter by master, salon, service, status
+   - Search appointments by client name
+2. **Real-time Updates**: Firebase Firestore listeners for live appointment sync
+3. **Client Booking Flow**: Public booking interface for clients
+4. **Mobile Optimization**: Responsive design for tablets and phones
+5. **Data Export/Import**: CSV, iCal, PDF reports
+6. **Notifications**: Email/SMS reminders for appointments
+7. **Analytics**: Dashboard with booking statistics and trends
+8. **Testing**: Unit tests and E2E test coverage
 
 ## Development Notes
 - Using TailwindCSS v3 (not v4) for PostCSS compatibility

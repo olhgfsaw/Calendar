@@ -71,7 +71,7 @@ const router = createRouter({
       name: 'client',
       component: () => import('@/pages/ClientPage.vue'),
       meta: { layout: 'default', requiresAuth: false },
-      meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
+      // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
       path: '/forbidden',

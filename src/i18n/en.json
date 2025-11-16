@@ -86,6 +86,28 @@
     "notes": "Notes",
     "status": "Status"
   },
+  "appointments": {
+    "title": "Appointments",
+    "createAppointment": "Create Appointment",
+    "editAppointment": "Edit Appointment",
+    "client": "Client",
+    "master": "Master",
+    "service": "Service",
+    "date": "Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "duration": "Duration",
+    "notes": "Notes",
+    "notesPlaceholder": "Add notes about this appointment...",
+    "status": {
+      "label": "Status",
+      "scheduled": "Scheduled",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "no-show": "No Show"
+    }
+  },
   "masters": {
     "title": "Masters",
     "addMaster": "Add Master",

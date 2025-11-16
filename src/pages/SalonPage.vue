@@ -102,7 +102,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useNotificationsStore } from '@/store/notifications'
+import { useNotificationsStore } from '@/stores/notifications'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import TextButton from '@/components/base/buttons/TextButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'

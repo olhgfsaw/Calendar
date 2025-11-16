@@ -4,7 +4,12 @@
       <div class="flex items-center gap-4">
         <TextButton @click="router.back()">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </TextButton>
         <h1 class="text-2xl font-bold">
@@ -23,20 +28,15 @@
 
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <BaseInput
-          v-model="form.name"
-          :label="t('masters.name')"
-          :error="errors.name"
-          required
-        />
-        
+        <BaseInput v-model="form.name" :label="t('masters.name')" :error="errors.name" required />
+
         <BaseInput
           v-model="form.specialization"
           :label="t('masters.specialization')"
           :error="errors.specialization"
           required
         />
-        
+
         <BaseInput
           v-model="form.phone"
           :label="t('masters.phone')"
@@ -44,7 +44,7 @@
           type="tel"
           required
         />
-        
+
         <BaseInput
           v-model="form.email"
           :label="t('masters.email')"
@@ -62,10 +62,7 @@
         />
 
         <div class="flex items-center gap-4">
-          <BaseSwitch
-            v-model="form.isActive"
-            :label="t('masters.active')"
-          />
+          <BaseSwitch v-model="form.isActive" :label="t('masters.active')" />
         </div>
       </div>
 
@@ -100,7 +97,7 @@
           :label="t('masters.startTime')"
           :error="errors.startTime"
         />
-        
+
         <BaseTimePicker
           v-model="form.endTime"
           :label="t('masters.endTime')"
@@ -122,7 +119,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useNotificationsStore } from '@/store/notifications'
+import { useNotificationsStore } from '@/stores/notifications'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import TextButton from '@/components/base/buttons/TextButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
@@ -168,23 +165,23 @@ const isNewMaster = computed(() => route.params.id === 'new')
 
 const validate = (): boolean => {
   errors.value = {}
-  
+
   if (!form.value.name) {
     errors.value.name = t('validation.name.required')
   }
-  
+
   if (!form.value.specialization) {
     errors.value.specialization = t('validation.required')
   }
-  
+
   if (!form.value.phone) {
     errors.value.phone = t('validation.phone.required')
   }
-  
+
   if (!form.value.email) {
     errors.value.email = t('validation.email.required')
   }
-  
+
   return Object.keys(errors.value).length === 0
 }
 
@@ -193,13 +190,11 @@ const onSubmit = () => {
     notificationsStore.error(t('validation.formErrors'))
     return
   }
-  
+
   notificationsStore.success(
-    isNewMaster.value 
-      ? t('masters.masterCreated') 
-      : t('masters.masterUpdated')
+    isNewMaster.value ? t('masters.masterCreated') : t('masters.masterUpdated'),
   )
-  
+
   router.push('/masters')
 }
 
