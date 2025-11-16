@@ -72,6 +72,7 @@
     "week": "Week",
     "day": "Day",
     "today": "Today",
+    "time": "Time",
     "salon": "Salon",
     "master": "Master",
     "service": "Service",
@@ -84,7 +85,9 @@
     "endTime": "End Time",
     "duration": "Duration",
     "notes": "Notes",
-    "status": "Status"
+    "status": "Status",
+    "appointmentCreated": "Appointment created successfully",
+    "appointmentUpdated": "Appointment updated successfully"
   },
   "appointments": {
     "title": "Appointments",
