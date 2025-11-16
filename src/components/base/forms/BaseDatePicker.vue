@@ -15,8 +15,8 @@
         :class="[
           error 
             ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' 
-            : 'border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500/20',
-          disabled ? 'bg-gray-100 dark:bg-gray-800 cursor-not-allowed opacity-60' : 'bg-white dark:bg-gray-900'
+            : 'border-gray-300 dark:border-gray-500 focus:border-blue-500 focus:ring-blue-500/20',
+          disabled ? 'bg-gray-100 dark:bg-gray-700 cursor-not-allowed opacity-60' : 'bg-white dark:bg-gray-800'
         ]"
         :disabled="disabled"
         @click="togglePicker"
@@ -39,7 +39,7 @@
     >
       <div
         v-if="isOpen"
-        class="absolute z-50 mt-2 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 min-w-[280px]"
+        class="absolute z-50 mt-2 p-4 bg-white dark:bg-gray-700 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 min-w-[280px]"
       >
         <div class="flex items-center justify-between mb-4">
           <button
@@ -100,7 +100,7 @@
         <div class="mt-4 flex gap-2">
           <button
             type="button"
-            class="flex-1 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            class="flex-1 px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-500 rounded hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
             @click="clearDate"
           >
             {{ t('common.clear') }}
@@ -117,7 +117,7 @@
     </transition>
 
     <p v-if="error" class="mt-1 text-sm text-red-500">{{ error }}</p>
-    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ hint }}</p>
+    <p v-else-if="hint" class="mt-1 text-sm text-gray-500 dark:text-gray-300">{{ hint }}</p>
   </div>
 </template>
 

@@ -74,6 +74,12 @@ const router = createRouter({
       // meta: { layout: 'default', requiresAuth: true, roles: ['admin', 'manager', 'master'] },
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('@/pages/ProfilePage.vue'),
+      meta: { layout: 'default', requiresAuth: true },
+    },
+    {
       path: '/forbidden',
       name: 'forbidden',
       component: () => import('@/pages/Forbidden.vue'),

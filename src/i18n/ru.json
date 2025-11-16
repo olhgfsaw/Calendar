@@ -225,6 +225,9 @@
     "url": {
       "invalid": "URL недействителен"
     },
+    "displayName": {
+      "required": "Имя обязательно"
+    },
     "required": "Это поле обязательно",
     "formErrors": "Пожалуйста, исправьте ошибки в форме"
   },
@@ -242,6 +245,32 @@
     "light": "Светлая",
     "dark": "Темная",
     "auto": "Авто"
+  },
+  "profile": {
+    "title": "Настройки Профиля",
+    "description": "Управление личной информацией и настройками",
+    "personalInfo": "Личная Информация",
+    "preferences": "Настройки",
+    "notifications": "Уведомления",
+    "displayName": "Имя",
+    "email": "Email",
+    "photoURL": "URL Фото",
+    "photoURLPlaceholder": "https://example.com/photo.jpg",
+    "preferredLanguage": "Предпочитаемый Язык",
+    "theme": "Тема",
+    "themeLight": "Светлая",
+    "themeDark": "Темная",
+    "themeAuto": "Авто (Системная)",
+    "timezone": "Часовой Пояс",
+    "timeFormat": "Формат Времени",
+    "timeFormat12h": "12 Часов",
+    "timeFormat24h": "24 Часа",
+    "emailNotifications": "Email Уведомления",
+    "pushNotifications": "Push Уведомления",
+    "updateSuccess": "Профиль обновлен успешно",
+    "updateSuccessMessage": "Изменения в профиле сохранены",
+    "updateError": "Ошибка обновления профиля",
+    "updateErrorMessage": "Не удалось обновить профиль. Пожалуйста, попробуйте снова"
   },
   "language": {
     "en": "Английский",

@@ -247,6 +247,9 @@
     "url": {
       "invalid": "URL is invalid"
     },
+    "displayName": {
+      "required": "Display name is required"
+    },
     "required": "This field is required",
     "formErrors": "Please fix the errors in the form"
   },
@@ -264,6 +267,32 @@
     "light": "Light",
     "dark": "Dark",
     "auto": "Auto"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "description": "Manage your personal information and preferences",
+    "personalInfo": "Personal Information",
+    "preferences": "Preferences",
+    "notifications": "Notifications",
+    "displayName": "Display Name",
+    "email": "Email",
+    "photoURL": "Photo URL",
+    "photoURLPlaceholder": "https://example.com/photo.jpg",
+    "preferredLanguage": "Preferred Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeAuto": "Auto (System)",
+    "timezone": "Timezone",
+    "timeFormat": "Time Format",
+    "timeFormat12h": "12 Hour",
+    "timeFormat24h": "24 Hour",
+    "emailNotifications": "Email Notifications",
+    "pushNotifications": "Push Notifications",
+    "updateSuccess": "Profile updated successfully",
+    "updateSuccessMessage": "Your profile changes have been saved",
+    "updateError": "Error updating profile",
+    "updateErrorMessage": "Failed to update your profile. Please try again"
   },
   "language": {
     "en": "English",

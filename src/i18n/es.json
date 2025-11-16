@@ -225,6 +225,9 @@
     "url": {
       "invalid": "La URL no es válida"
     },
+    "displayName": {
+      "required": "El nombre es obligatorio"
+    },
     "required": "Este campo es obligatorio",
     "formErrors": "Por favor corrija los errores en el formulario"
   },
@@ -242,6 +245,32 @@
     "light": "Claro",
     "dark": "Oscuro",
     "auto": "Automático"
+  },
+  "profile": {
+    "title": "Configuración del Perfil",
+    "description": "Administre su información personal y preferencias",
+    "personalInfo": "Información Personal",
+    "preferences": "Preferencias",
+    "notifications": "Notificaciones",
+    "displayName": "Nombre",
+    "email": "Correo Electrónico",
+    "photoURL": "URL de Foto",
+    "photoURLPlaceholder": "https://ejemplo.com/foto.jpg",
+    "preferredLanguage": "Idioma Preferido",
+    "theme": "Tema",
+    "themeLight": "Claro",
+    "themeDark": "Oscuro",
+    "themeAuto": "Auto (Sistema)",
+    "timezone": "Zona Horaria",
+    "timeFormat": "Formato de Hora",
+    "timeFormat12h": "12 Horas",
+    "timeFormat24h": "24 Horas",
+    "emailNotifications": "Notificaciones por Email",
+    "pushNotifications": "Notificaciones Push",
+    "updateSuccess": "Perfil actualizado exitosamente",
+    "updateSuccessMessage": "Los cambios en su perfil han sido guardados",
+    "updateError": "Error al actualizar perfil",
+    "updateErrorMessage": "No se pudo actualizar su perfil. Por favor intente de nuevo"
   },
   "language": {
     "en": "Inglés",

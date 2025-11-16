@@ -1,281 +1,62 @@
 # Beauty Salon Calendar Management Application
 
 ## Overview
-A comprehensive calendar management application for beauty salons built with Vue 3, TypeScript, Firebase, and TailwindCSS. The application supports multi-language interface (English, Spanish, Russian), role-based access control, and provides features for managing appointments, masters, salons, and clients.
+A comprehensive calendar management application for beauty salons built with Vue 3, TypeScript, Firebase, and TailwindCSS. The application supports a multi-language interface (English, Spanish, Russian), role-based access control, and provides features for managing appointments, masters, salons, and clients.
 
-**Status**: Initial MVP setup complete  
-**Last Updated**: November 16, 2025
-
-## Tech Stack
-- **Frontend**: Vue 3 + TypeScript + Vite
-- **Backend**: Firebase (Authentication, Firestore)
-- **Styling**: TailwindCSS v3
-- **State Management**: Pinia
-- **Internationalization**: vue-i18n
-- **Form Validation**: VeeValidate + Yup
-- **Router**: Vue Router 4
-
-## Recent Changes
-
-### November 16, 2025 - VeeValidate Integration Complete
-- ✅ **All Forms Use VeeValidate**: Consistent validation across the application
-  - AppointmentModal: VeeValidate with appointmentSchema
-  - MasterPage: VeeValidate with masterSchema
-  - SalonPage: VeeValidate with salonSchema
-  - ClientPage: VeeValidate with clientSchema
-- ✅ **Validation Schemas**: Complete Yup schemas for all entities
-  - appointmentSchema: clientId, masterId, serviceId, date, startTime, status
-  - masterSchema: name, specialization, phone, email, photoURL, bio, workingDays, times
-  - salonSchema: name, address, city, country, phone, email, workingHours, description
-  - clientSchema: firstName, lastName, phone, email, notes
-- ✅ **i18n Validation Messages**: All validation messages in 3 languages (en, es, ru)
-  - Client/Master/Service/Status required messages
-  - Specialization/Address/City/Country validation
-  - URL validation for optional fields
-- ✅ **BaseCheckbox Enhancement**: Multi-select support for array values
-  - Works with boolean for single checkboxes
-  - Works with string[] for multi-select checkboxes (e.g., working days)
-- ✅ **Package Installation**: Added @vee-validate/yup package
-
-### November 16, 2025 - Calendar Multi-View System with Drag-and-Drop Complete
-- ✅ **Calendar View Modes**: Month/Week/Day switching with dedicated components
-  - Month View: Full month calendar grid with appointments
-  - Week View: 7-day grid with hourly slots and visual positioning
-  - Day View: Single day with detailed hourly schedule
-  - Seamless switching between views with preserved state
-- ✅ **Drag-and-Drop Functionality**: Full appointment rescheduling
-  - 15-minute precision in Week and Day views
-  - Visual feedback during drag operations
-  - Duration preservation when moving appointments
-  - Timezone-safe date handling with date-fns parse
-  - Accurate visual positioning based on start time and duration
-- ✅ **Visual Positioning System**:
-  - Appointments positioned by exact minutes (not just hours)
-  - Height reflects actual appointment duration
-  - Top offset calculated from start minutes
-  - Minimum height 30px for visibility
-- ✅ **Navigation**: Adaptive controls for each view
-  - Month navigation: previous/next month
-  - Week navigation: previous/next week
-  - Day navigation: previous/next day
-  - "Today" button returns to current date in any view
-
-### November 16, 2025 - Universal DataTable Component with Sorting & Pagination
-- ✅ **BaseDataTable Component**: Universal table component with advanced features
-  - Grid-based layout with dynamic columns (CSS grid)
-  - Locale-aware sorting with null-safe comparisons (localeCompare)
-  - Synchronous pagination with automatic page clamping
-  - Two view modes: table (grid layout) and grid (card view)
-  - Customizable cells via slots
-  - Support for 10+ items per page with navigation
-  - Fully internationalized (en, es, ru)
-  - Dark mode support
-- ✅ **Management Pages Refactored**: All list pages now use BaseDataTable
-  - MastersListPage: 12 masters with table view
-  - ClientsListPage: 13 clients with table view
-  - SalonsListPage: Grid view with cards
-  - Search functionality integrated with pagination
-  - Sorting by all columns (except actions/status)
-  - Responsive design for all screen sizes
-
-### November 16, 2025 - Appointment Filtering & Deletion Complete
-- ✅ **Calendar Filters**: Master and Status filtering with full sync
-  - Dropdown filters for master selection and appointment status
-  - Real-time synchronization with Pinia store using watchers (deep + immediate)
-  - Clear Filters button appears when filters are active
-  - Filter state persists across navigation
-- ✅ **Appointment Deletion**: Full delete flow with confirmation
-  - Delete button in AppointmentModal (only for existing appointments)
-  - Confirmation dialog before deletion
-  - Calendar updates immediately after deletion
-  - Success notification after deletion
-- ✅ **Notifications System**: Complete notification flow
-  - Standardized format: { type, userId, title, message }
-  - Notifications on create/update/delete operations
-
-### November 16, 2025 - Appointment System Complete
-- ✅ **AppointmentCard Component**: Compact card for displaying appointments in calendar grid
-  - Status-based color coding (scheduled, confirmed, cancelled, completed, no-show)
-  - Shows client name, time, service, master
-  - Localized status badges
-- ✅ **AppointmentModal Component**: Full-featured form for creating/editing appointments
-  - Fields: client, master, service, date, start time, status, notes
-  - Integration with BaseDatePicker and BaseTimePicker
-  - Slot pre-filling: clicking calendar cells pre-fills date/time in form
-  - Form validation with error handling
-- ✅ **CalendarPage**: Complete weekly calendar view
-  - 7-day weekly grid with 12 working hours (8:00-19:00)
-  - Locale-aware week start (Sunday for EN, Monday for ES/RU)
-  - Week navigation (previous/next/today buttons)
-  - Click any time slot to create appointment at that specific time
-  - Appointments displayed in corresponding time slots
-  - Integration with calendar store for state management
-- ✅ **Translations**: Complete i18n for appointments (en, es, ru)
-  - Status labels, form fields, validation messages
-  - Calendar labels (today, new appointment, etc.)
-
-### November 16, 2025 - Full Locale Support for BaseDatePicker  
-- ✅ Implemented complete locale-specific formatting using date-fns locales (enUS, es, ru)
-- ✅ Added locale-aware week start: Sunday for EN, Monday for ES/RU
-- ✅ Localized month names and date formatting (MMMM yyyy, PPP format)
-- ✅ Added short weekday abbreviations to i18n: EN (Su Mo Tu...), ES (Do Lu Ma...), RU (Вс Пн Вт...)
-- ✅ Calendar grid now respects locale-specific week start using startOfWeek/endOfWeek
-- ✅ All date formatting follows locale conventions
-
-### November 16, 2025 - Management Pages & Form Components Added
-- ✅ Created BaseDatePicker component with calendar grid and i18n support
-- ✅ Created BaseTimePicker with 30-minute step support and v-model integration
-- ✅ Implemented all management pages: Masters, Salons, Clients (list + detail views)
-- ✅ Added management routes with role-based permissions (admin, manager)
-- ✅ Extended translations for all three languages (weekdays, validation, management sections)
-- ✅ Fixed BaseTimePicker to properly emit v-model updates
-
-### November 16, 2025 - Initial MVP Setup Complete
-- ✅ Created complete UI component library (buttons, forms, modals, layout pieces)
-- ✅ Implemented authentication flow with VeeValidate integration
-- ✅ Added role-based routing with permission checks
-- ✅ Created auth pages: Login, Join (Register), ForgotPassword, Forbidden
-- ✅ Implemented DefaultLayout with Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
-- ✅ Fixed TailwindCSS configuration issues
-- ✅ Configured dev server on port 4000
-
-## Project Architecture
-
-### Directory Structure
-```
-src/
-├── components/
-│   ├── base/
-│   │   ├── buttons/         # PrimaryButton, IconButton, TextButton
-│   │   ├── forms/           # BaseInput, BaseTextarea, BaseSelect, BaseCheckbox, BaseSwitch
-│   │   │                    # BaseDatePicker, BaseTimePicker (30-min step support)
-│   │   ├── modals/          # BaseModal, ConfirmModal
-│   │   └── layoutPieces/    # Logo, Avatar, NotificationBell, ThemeToggle, LanguageSwitcher
-│   └── calendar/
-│       ├── AppointmentCard.vue   # Appointment display card with status colors
-│       ├── AppointmentModal.vue  # Create/edit appointment modal form
-│       └── index.ts             # Calendar components exports
-├── layouts/
-│   ├── DefaultLayout.vue    # Main application layout
-│   └── AuthLayout.vue       # Authentication pages layout
-├── pages/
-│   ├── LoginPage.vue        # User login
-│   ├── JoinPage.vue         # User registration
-│   ├── ForgotPasswordPage.vue
-│   ├── CalendarPage.vue     # Main calendar view
-│   ├── MastersListPage.vue  # Masters management
-│   ├── MasterPage.vue       # Master detail/edit
-│   ├── SalonsListPage.vue   # Salons management
-│   ├── SalonPage.vue        # Salon detail/edit
-│   ├── ClientsListPage.vue  # Clients management
-│   ├── ClientPage.vue       # Client detail/edit
-│   ├── Forbidden.vue        # 403 Access Denied
-│   └── NotFound.vue         # 404 Page
-├── router/
-│   └── index.ts             # Vue Router with role-based guards
-├── stores/
-│   ├── auth.ts             # Authentication state
-│   ├── user.ts             # User data management
-│   ├── calendar.ts         # Calendar state
-│   ├── ui.ts               # UI state (theme, sidebar, language)
-│   └── notifications.ts    # Toasts and notifications
-├── services/
-│   ├── firebase.ts         # Firebase configuration
-│   └── permission.ts       # Role-based permission checks
-├── utils/
-│   ├── validators.ts       # Yup validation schemas
-│   └── date.ts            # Date formatting utilities
-├── i18n/
-│   └── index.ts           # Multi-language configuration
-└── types/
-    └── index.ts           # TypeScript type definitions
-```
-
-### User Roles
-- **admin**: Full access to all features
-- **manager**: Salon management, appointments
-- **master**: View and manage own appointments
-- **client**: Book and view own appointments
-
-### Routing
-All routes support role-based access control:
-- `/login` - Login page (public)
-- `/join` - Registration page (public)
-- `/forgot-password` - Password reset (public)
-- `/calendar` - Main calendar view (requires: admin, manager, master)
-- `/masters` - Masters list (requires: admin, manager)
-- `/masters/:id` - Master detail/edit (requires: admin, manager)
-- `/salons` - Salons list (requires: admin)
-- `/salons/:id` - Salon detail/edit (requires: admin)
-- `/clients` - Clients list (requires: admin, manager, master)
-- `/clients/:id` - Client detail/edit (requires: admin, manager, master)
-- `/forbidden` - Access denied page
-- `/` - Redirects to calendar
+The project aims to deliver a robust and user-friendly system for beauty salon management, offering core functionalities for appointment scheduling and administration. Future ambitions include advanced calendar features, real-time updates, a client booking flow, and comprehensive analytics.
 
 ## User Preferences
 - **Theme**: Supports light and dark modes
 - **Languages**: English, Spanish, Russian
 - **Validation**: All forms use VeeValidate with Yup schemas
+- I want iterative development.
+- Ask before making major changes.
 
-## Configuration
+## System Architecture
+The application is a Vue 3 single-page application (SPA) using TypeScript for type safety and Pinia for state management. Firebase provides backend services for authentication and Firestore for data storage (planned). TailwindCSS is used for utility-first styling, ensuring a consistent and responsive UI. Vue Router handles navigation with role-based access control.
 
-### Environment Variables Needed
-```
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_PROJECT_ID=your_project_id
-SESSION_SECRET=already_configured
-```
+### UI/UX Decisions
+- **Multi-language Interface**: Supports English, Spanish, and Russian with `vue-i18n`.
+- **Theme Management**: Users can switch between light and dark modes.
+- **Form Validation**: Consistent validation across all forms using `VeeValidate` and `Yup`.
+- **Calendar Views**: Provides Month, Week, and Day views with drag-and-drop functionality for appointments.
+- **Data Tables**: A universal `BaseDataTable` component offers sorting, pagination, and two view modes (table/grid) for managing lists of masters, clients, and salons.
+- **Accessibility**: Dark theme contrast improvements for WCAG compliance.
+- **Icons**: Uses `@heroicons/vue` for navigation and UI elements.
 
-### Development Server
-- Port: 4000
-- Command: `npm run dev`
-- Vite configured to allow all hosts for Replit environment
+### Technical Implementations
+- **Frontend Framework**: Vue 3 + TypeScript + Vite.
+- **State Management**: Pinia stores for authentication, user data, calendar state, UI settings, and notifications.
+- **Routing**: Vue Router 4 with role-based guards (admin, manager, master, client).
+- **Date Handling**: `date-fns` for locale-aware date formatting and manipulation, particularly for calendar functionality.
+- **Component Library**: A comprehensive set of base UI components (buttons, form inputs, modals, layout pieces) for reusability and consistency.
+- **Notifications**: A standardized notification system for user feedback on actions.
 
-## Known Issues & Next Steps
+### Feature Specifications
+- **Authentication**: User login, registration, password reset, and role-based authorization.
+- **User Profile Management**: Users can edit personal info, preferences (language, theme), and notification settings.
+- **Appointment Management**:
+    - Create, edit, and delete appointments via an `AppointmentModal`.
+    - Display appointments on calendar grids with status-based color coding.
+    - Filter appointments by master and status.
+    - Drag-and-drop rescheduling in Week and Day views with 15-minute precision and duration preservation.
+- **Master, Salon, Client Management**: CRUD operations for masters, salons, and clients, with dedicated list and detail pages.
+- **Internationalization**: Full i18n support for all UI text, form fields, validation messages, and date formats.
 
-### Known Limitations
-1. **Data Layer**: Currently uses mock data and local state for demonstration
-   - Calendar appointments stored in Pinia store (not persisted)
-   - Management pages (Masters, Salons, Clients) use mock data
-   - Ready for Firebase Firestore integration when credentials are configured
-2. **Appointment Features**: Core functionality complete, advanced features pending
-   - ✅ Create appointments via calendar grid click
-   - ✅ Edit existing appointments
-   - ✅ Delete appointments with confirmation
-   - ✅ Status management (scheduled, confirmed, cancelled, completed, no-show)
-   - ✅ Filter by master and status
-   - ✅ Drag-and-drop rescheduling with 15-minute precision
-   - ✅ Month/Week/Day view modes
-   - ✅ Duration preservation during drag
-   - ✅ Visual positioning based on exact time
-   - ⏳ Recurring appointments (not yet implemented)
-   - ⏳ Conflict detection and double-booking prevention (not yet implemented)
+### System Design Choices
+- **Modular Structure**: Organized directory structure with clear separation of components, layouts, pages, stores, services, and utilities.
+- **Role-Based Access Control (RBAC)**: Implemented at the routing level to restrict access based on user roles (admin, manager, master, client).
+- **Reactive Data Flow**: Utilizes Vue's reactivity system and Pinia for efficient state management and UI updates.
 
-### Required for Production
-1. **Firebase Credentials**: Add Firebase configuration via Replit secrets
-2. **Data Persistence**: Connect management pages to Firebase Firestore
-3. **Email Templates**: Configure Firebase email templates for password reset
-4. **Role Assignment**: Implement admin interface for assigning user roles
-
-### Future Enhancements
-1. **Advanced Calendar Features**:
-   - Recurring appointments support
-   - Conflict detection and double-booking prevention
-   - Additional filters: salon, service
-   - Search appointments by client name
-   - Multi-select for bulk operations
-   - Print/export views
-2. **Real-time Updates**: Firebase Firestore listeners for live appointment sync
-3. **Client Booking Flow**: Public booking interface for clients
-4. **Mobile Optimization**: Responsive design for tablets and phones
-5. **Data Export/Import**: CSV, iCal, PDF reports
-6. **Notifications**: Email/SMS reminders for appointments
-7. **Analytics**: Dashboard with booking statistics and trends
-8. **Testing**: Unit tests and E2E test coverage
-
-## Development Notes
-- Using TailwindCSS v3 (not v4) for PostCSS compatibility
-- VeeValidate integrated in all authentication forms
-- Firebase integration ready, waiting for credentials
-- Dev server runs on port 4000 (required for Replit webview)
+## External Dependencies
+- **Firebase**:
+    - Authentication (for user login, registration, password reset).
+    - Firestore (planned for data persistence for appointments, masters, salons, clients).
+- **TailwindCSS v3**: Utility-first CSS framework for styling.
+- **VeeValidate** and **Yup**: For form validation.
+- **vue-i18n**: For multi-language support.
+- **Vue Router 4**: For client-side routing.
+- **Pinia**: For state management.
+- **date-fns**: For date manipulation and formatting.
+- **@heroicons/vue**: For UI icons.
+- **@vueuse/core**: For utility functions like `onClickOutside`.
