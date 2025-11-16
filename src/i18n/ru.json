@@ -1,0 +1,153 @@
+{
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "add": "Добавить",
+    "search": "Поиск",
+    "filter": "Фильтр",
+    "loading": "Загрузка...",
+    "noData": "Нет данных",
+    "confirm": "Подтвердить",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Предыдущий",
+    "close": "Закрыть",
+    "submit": "Отправить"
+  },
+  "nav": {
+    "calendar": "Календарь",
+    "masters": "Мастера",
+    "salons": "Салоны",
+    "clients": "Клиенты",
+    "bookings": "Записи",
+    "reports": "Отчеты",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "admin": "Админ-панель",
+    "logout": "Выйти",
+    "login": "Войти"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "login": "Войти",
+    "register": "Регистрация",
+    "forgotPassword": "Забыли пароль?",
+    "resetPassword": "Сбросить пароль",
+    "createAccount": "Создать аккаунт",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "loginSuccess": "Вход выполнен успешно",
+    "logoutSuccess": "Выход выполнен успешно",
+    "registerSuccess": "Аккаунт создан успешно",
+    "resetEmailSent": "Письмо для сброса пароля отправлено"
+  },
+  "calendar": {
+    "title": "Календарь",
+    "month": "Месяц",
+    "week": "Неделя",
+    "day": "День",
+    "today": "Сегодня",
+    "salon": "Салон",
+    "master": "Мастер",
+    "service": "Услуга",
+    "client": "Клиент",
+    "newAppointment": "Новая запись",
+    "editAppointment": "Редактировать запись",
+    "deleteAppointment": "Удалить запись",
+    "confirmDelete": "Вы уверены, что хотите удалить эту запись?",
+    "startTime": "Время начала",
+    "endTime": "Время окончания",
+    "duration": "Длительность",
+    "notes": "Заметки",
+    "status": "Статус"
+  },
+  "masters": {
+    "title": "Мастера",
+    "addMaster": "Добавить мастера",
+    "editMaster": "Редактировать мастера",
+    "deleteMaster": "Удалить мастера",
+    "name": "Имя",
+    "phone": "Телефон",
+    "email": "Email",
+    "specialization": "Специализация",
+    "workingHours": "Рабочие часы",
+    "services": "Услуги",
+    "status": "Статус",
+    "active": "Активен",
+    "inactive": "Неактивен",
+    "vacation": "В отпуске"
+  },
+  "salons": {
+    "title": "Салоны",
+    "addSalon": "Добавить салон",
+    "editSalon": "Редактировать салон",
+    "deleteSalon": "Удалить салон",
+    "name": "Название",
+    "address": "Адрес",
+    "city": "Город",
+    "country": "Страна",
+    "phone": "Телефон",
+    "email": "Email",
+    "workingHours": "Часы работы"
+  },
+  "clients": {
+    "title": "Клиенты",
+    "addClient": "Добавить клиента",
+    "editClient": "Редактировать клиента",
+    "deleteClient": "Удалить клиента",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "phone": "Телефон",
+    "email": "Email",
+    "notes": "Заметки",
+    "lastVisit": "Последний визит",
+    "totalAppointments": "Всего записей"
+  },
+  "validation": {
+    "email": {
+      "required": "Email обязателен",
+      "invalid": "Email недействителен"
+    },
+    "password": {
+      "required": "Пароль обязателен",
+      "minLength": "Пароль должен быть не менее 6 символов"
+    },
+    "phone": {
+      "required": "Телефон обязателен",
+      "invalid": "Номер телефона недействителен"
+    },
+    "name": {
+      "required": "Имя обязательно",
+      "minLength": "Имя должно быть не менее 2 символов",
+      "maxLength": "Имя не должно превышать 50 символов"
+    },
+    "time": {
+      "required": "Время обязательно",
+      "invalid": "Неверный формат времени"
+    },
+    "date": {
+      "required": "Дата обязательна"
+    }
+  },
+  "notifications": {
+    "appointmentCreated": "Запись создана успешно",
+    "appointmentUpdated": "Запись обновлена успешно",
+    "appointmentDeleted": "Запись удалена успешно",
+    "error": "Произошла ошибка",
+    "success": "Операция выполнена успешно"
+  },
+  "theme": {
+    "light": "Светлая",
+    "dark": "Темная",
+    "auto": "Авто"
+  },
+  "language": {
+    "en": "Английский",
+    "es": "Испанский",
+    "ru": "Русский"
+  }
+}

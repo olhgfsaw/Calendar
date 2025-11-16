@@ -1,0 +1,153 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "loading": "Cargando...",
+    "noData": "No hay datos disponibles",
+    "confirm": "Confirmar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "submit": "Enviar"
+  },
+  "nav": {
+    "calendar": "Calendario",
+    "masters": "Maestros",
+    "salons": "Salones",
+    "clients": "Clientes",
+    "bookings": "Reservas",
+    "reports": "Informes",
+    "settings": "Configuración",
+    "profile": "Perfil",
+    "admin": "Panel de Administración",
+    "logout": "Cerrar Sesión",
+    "login": "Iniciar Sesión"
+  },
+  "auth": {
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "resetPassword": "Restablecer Contraseña",
+    "createAccount": "Crear Cuenta",
+    "alreadyHaveAccount": "¿Ya tiene una cuenta?",
+    "dontHaveAccount": "¿No tiene cuenta?",
+    "loginSuccess": "Sesión iniciada correctamente",
+    "logoutSuccess": "Sesión cerrada correctamente",
+    "registerSuccess": "Cuenta creada exitosamente",
+    "resetEmailSent": "Correo de restablecimiento enviado"
+  },
+  "calendar": {
+    "title": "Calendario",
+    "month": "Mes",
+    "week": "Semana",
+    "day": "Día",
+    "today": "Hoy",
+    "salon": "Salón",
+    "master": "Maestro",
+    "service": "Servicio",
+    "client": "Cliente",
+    "newAppointment": "Nueva Cita",
+    "editAppointment": "Editar Cita",
+    "deleteAppointment": "Eliminar Cita",
+    "confirmDelete": "¿Está seguro de que desea eliminar esta cita?",
+    "startTime": "Hora de Inicio",
+    "endTime": "Hora de Fin",
+    "duration": "Duración",
+    "notes": "Notas",
+    "status": "Estado"
+  },
+  "masters": {
+    "title": "Maestros",
+    "addMaster": "Añadir Maestro",
+    "editMaster": "Editar Maestro",
+    "deleteMaster": "Eliminar Maestro",
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "specialization": "Especialización",
+    "workingHours": "Horario de Trabajo",
+    "services": "Servicios",
+    "status": "Estado",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "vacation": "De Vacaciones"
+  },
+  "salons": {
+    "title": "Salones",
+    "addSalon": "Añadir Salón",
+    "editSalon": "Editar Salón",
+    "deleteSalon": "Eliminar Salón",
+    "name": "Nombre",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "country": "País",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "workingHours": "Horario de Trabajo"
+  },
+  "clients": {
+    "title": "Clientes",
+    "addClient": "Añadir Cliente",
+    "editClient": "Editar Cliente",
+    "deleteClient": "Eliminar Cliente",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "notes": "Notas",
+    "lastVisit": "Última Visita",
+    "totalAppointments": "Total de Citas"
+  },
+  "validation": {
+    "email": {
+      "required": "El correo electrónico es obligatorio",
+      "invalid": "El correo electrónico no es válido"
+    },
+    "password": {
+      "required": "La contraseña es obligatoria",
+      "minLength": "La contraseña debe tener al menos 6 caracteres"
+    },
+    "phone": {
+      "required": "El teléfono es obligatorio",
+      "invalid": "El número de teléfono no es válido"
+    },
+    "name": {
+      "required": "El nombre es obligatorio",
+      "minLength": "El nombre debe tener al menos 2 caracteres",
+      "maxLength": "El nombre no debe exceder los 50 caracteres"
+    },
+    "time": {
+      "required": "La hora es obligatoria",
+      "invalid": "El formato de hora no es válido"
+    },
+    "date": {
+      "required": "La fecha es obligatoria"
+    }
+  },
+  "notifications": {
+    "appointmentCreated": "Cita creada exitosamente",
+    "appointmentUpdated": "Cita actualizada exitosamente",
+    "appointmentDeleted": "Cita eliminada exitosamente",
+    "error": "Ocurrió un error",
+    "success": "Operación completada exitosamente"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "auto": "Automático"
+  },
+  "language": {
+    "en": "Inglés",
+    "es": "Español",
+    "ru": "Ruso"
+  }
+}

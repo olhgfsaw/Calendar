@@ -1,0 +1,153 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "submit": "Submit"
+  },
+  "nav": {
+    "calendar": "Calendar",
+    "masters": "Masters",
+    "salons": "Salons",
+    "clients": "Clients",
+    "bookings": "Bookings",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "admin": "Admin Dashboard",
+    "logout": "Logout",
+    "login": "Login"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "loginSuccess": "Successfully logged in",
+    "logoutSuccess": "Successfully logged out",
+    "registerSuccess": "Account created successfully",
+    "resetEmailSent": "Password reset email sent"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "month": "Month",
+    "week": "Week",
+    "day": "Day",
+    "today": "Today",
+    "salon": "Salon",
+    "master": "Master",
+    "service": "Service",
+    "client": "Client",
+    "newAppointment": "New Appointment",
+    "editAppointment": "Edit Appointment",
+    "deleteAppointment": "Delete Appointment",
+    "confirmDelete": "Are you sure you want to delete this appointment?",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "duration": "Duration",
+    "notes": "Notes",
+    "status": "Status"
+  },
+  "masters": {
+    "title": "Masters",
+    "addMaster": "Add Master",
+    "editMaster": "Edit Master",
+    "deleteMaster": "Delete Master",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "specialization": "Specialization",
+    "workingHours": "Working Hours",
+    "services": "Services",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "vacation": "On Vacation"
+  },
+  "salons": {
+    "title": "Salons",
+    "addSalon": "Add Salon",
+    "editSalon": "Edit Salon",
+    "deleteSalon": "Delete Salon",
+    "name": "Name",
+    "address": "Address",
+    "city": "City",
+    "country": "Country",
+    "phone": "Phone",
+    "email": "Email",
+    "workingHours": "Working Hours"
+  },
+  "clients": {
+    "title": "Clients",
+    "addClient": "Add Client",
+    "editClient": "Edit Client",
+    "deleteClient": "Delete Client",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "email": "Email",
+    "notes": "Notes",
+    "lastVisit": "Last Visit",
+    "totalAppointments": "Total Appointments"
+  },
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Email is invalid"
+    },
+    "password": {
+      "required": "Password is required",
+      "minLength": "Password must be at least 6 characters"
+    },
+    "phone": {
+      "required": "Phone is required",
+      "invalid": "Phone number is invalid"
+    },
+    "name": {
+      "required": "Name is required",
+      "minLength": "Name must be at least 2 characters",
+      "maxLength": "Name must not exceed 50 characters"
+    },
+    "time": {
+      "required": "Time is required",
+      "invalid": "Time format is invalid"
+    },
+    "date": {
+      "required": "Date is required"
+    }
+  },
+  "notifications": {
+    "appointmentCreated": "Appointment created successfully",
+    "appointmentUpdated": "Appointment updated successfully",
+    "appointmentDeleted": "Appointment deleted successfully",
+    "error": "An error occurred",
+    "success": "Operation completed successfully"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto"
+  },
+  "language": {
+    "en": "English",
+    "es": "Spanish",
+    "ru": "Russian"
+  }
+}
