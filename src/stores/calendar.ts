@@ -10,6 +10,7 @@ export const useCalendarStore = defineStore('calendar', () => {
 
   const selectedSalonId = ref<string | undefined>()
   const selectedMasterIds = ref<string[]>([])
+  const selectedStatuses = ref<Appointment['status'][]>([])
   const appointments = ref<Appointment[]>([])
   const loading = ref(false)
 
@@ -22,6 +23,13 @@ export const useCalendarStore = defineStore('calendar', () => {
       if (
         selectedMasterIds.value.length > 0 &&
         !selectedMasterIds.value.includes(appointment.masterId)
+      ) {
+        return false
+      }
+
+      if (
+        selectedStatuses.value.length > 0 &&
+        !selectedStatuses.value.includes(appointment.status)
       ) {
         return false
       }
@@ -51,6 +59,24 @@ export const useCalendarStore = defineStore('calendar', () => {
     selectedMasterIds.value = masterIds
   }
 
+  const toggleStatus = (status: Appointment['status']) => {
+    const index = selectedStatuses.value.indexOf(status)
+    if (index > -1) {
+      selectedStatuses.value.splice(index, 1)
+    } else {
+      selectedStatuses.value.push(status)
+    }
+  }
+
+  const setStatuses = (statuses: Appointment['status'][]) => {
+    selectedStatuses.value = statuses
+  }
+
+  const clearFilters = () => {
+    selectedMasterIds.value = []
+    selectedStatuses.value = []
+  }
+
   const addAppointment = (appointment: Appointment) => {
     appointments.value.push(appointment)
   }
@@ -77,6 +103,7 @@ export const useCalendarStore = defineStore('calendar', () => {
     view,
     selectedSalonId,
     selectedMasterIds,
+    selectedStatuses,
     appointments,
     loading,
     filteredAppointments,
@@ -84,6 +111,9 @@ export const useCalendarStore = defineStore('calendar', () => {
     selectSalon,
     toggleMaster,
     setMasters,
+    toggleStatus,
+    setStatuses,
+    clearFilters,
     addAppointment,
     updateAppointment,
     removeAppointment,

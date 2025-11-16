@@ -19,6 +19,9 @@
     "submit": "Enviar",
     "today": "Hoy",
     "clear": "Limpiar",
+    "all": "Todos",
+    "clearFilters": "Limpiar Filtros",
+    "create": "Crear",
     "hour": "Hora",
     "minute": "Minuto",
     "locale": "es-ES",
@@ -87,7 +90,10 @@
     "notes": "Notas",
     "status": "Estado",
     "appointmentCreated": "Cita creada exitosamente",
-    "appointmentUpdated": "Cita actualizada exitosamente"
+    "appointmentUpdated": "Cita actualizada exitosamente",
+    "appointmentDeleted": "Cita eliminada exitosamente",
+    "filterByMaster": "Maestro",
+    "filterByStatus": "Estado"
   },
   "appointments": {
     "title": "Citas",

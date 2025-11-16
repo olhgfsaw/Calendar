@@ -5,7 +5,7 @@
     </div>
     
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow flex-1 flex flex-col overflow-hidden">
-      <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div class="p-4 border-b border-gray-200 dark:border-gray-700 space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-4">
             <div class="flex items-center gap-2">
@@ -37,6 +37,50 @@
             </svg>
             {{ t('calendar.newAppointment') }}
           </PrimaryButton>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {{ t('calendar.filterByMaster') || 'Master:' }}
+            </label>
+            <select
+              v-model="selectedMasterId"
+              class="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              @change="handleMasterFilter"
+            >
+              <option value="">{{ t('common.all') || 'All' }}</option>
+              <option v-for="master in masterOptions" :key="master.value" :value="master.value">
+                {{ master.label }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <label class="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {{ t('calendar.filterByStatus') || 'Status:' }}
+            </label>
+            <select
+              v-model="selectedStatus"
+              class="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              @change="handleStatusFilter"
+            >
+              <option value="">{{ t('common.all') || 'All' }}</option>
+              <option value="scheduled">{{ t('appointments.status.scheduled') }}</option>
+              <option value="confirmed">{{ t('appointments.status.confirmed') }}</option>
+              <option value="cancelled">{{ t('appointments.status.cancelled') }}</option>
+              <option value="completed">{{ t('appointments.status.completed') }}</option>
+              <option value="no-show">{{ t('appointments.status.no-show') }}</option>
+            </select>
+          </div>
+          
+          <TextButton
+            v-if="hasActiveFilters"
+            @click="clearFilters"
+            class="text-sm"
+          >
+            {{ t('common.clearFilters') || 'Clear Filters' }}
+          </TextButton>
         </div>
       </div>
       
@@ -101,12 +145,13 @@
       :initial-time="selectedSlot ? formatHour(selectedSlot.hour) : null"
       @close="closeModal"
       @submit="handleAppointmentSubmit"
+      @delete="handleAppointmentDelete"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { format, startOfWeek, addDays, addWeeks, subWeeks, isSameDay, isToday as isTodayFn, set } from 'date-fns'
 import { enUS, es, ru } from 'date-fns/locale'
@@ -126,6 +171,8 @@ const currentDate = ref(new Date())
 const isModalOpen = ref(false)
 const selectedAppointment = ref<Appointment | null>(null)
 const selectedSlot = ref<{ date: Date; hour: number } | null>(null)
+const selectedMasterId = ref('')
+const selectedStatus = ref<Appointment['status'] | ''>('')
 
 const currentLocale = computed(() => {
   const localeMap = {
@@ -230,6 +277,7 @@ const handleAppointmentSubmit = (data: Partial<Appointment>) => {
     calendarStore.updateAppointment(selectedAppointment.value.id, data)
     notificationsStore.addNotification({
       type: 'success',
+      userId: 'demo-user',
       title: t('notifications.success'),
       message: t('calendar.appointmentUpdated') || 'Appointment updated successfully',
     })
@@ -245,6 +293,7 @@ const handleAppointmentSubmit = (data: Partial<Appointment>) => {
     calendarStore.addAppointment(newAppointment)
     notificationsStore.addNotification({
       type: 'success',
+      userId: 'demo-user',
       title: t('notifications.success'),
       message: t('calendar.appointmentCreated') || 'Appointment created successfully',
     })
@@ -261,6 +310,54 @@ const nextWeek = () => {
 
 const goToToday = () => {
   currentDate.value = new Date()
+}
+
+const handleMasterFilter = () => {
+  if (selectedMasterId.value) {
+    calendarStore.setMasters([selectedMasterId.value])
+  } else {
+    calendarStore.setMasters([])
+  }
+}
+
+const handleStatusFilter = () => {
+  if (selectedStatus.value) {
+    calendarStore.setStatuses([selectedStatus.value])
+  } else {
+    calendarStore.setStatuses([])
+  }
+}
+
+const clearFilters = () => {
+  selectedMasterId.value = ''
+  selectedStatus.value = ''
+  calendarStore.clearFilters()
+}
+
+const hasActiveFilters = computed(() => {
+  return calendarStore.selectedMasterIds.length > 0 || calendarStore.selectedStatuses.length > 0
+})
+
+watch(() => calendarStore.selectedMasterIds, (newIds) => {
+  selectedMasterId.value = newIds[0] || ''
+}, { deep: true, immediate: true })
+
+watch(() => calendarStore.selectedStatuses, (newStatuses) => {
+  selectedStatus.value = newStatuses[0] || ''
+}, { deep: true, immediate: true })
+
+const handleAppointmentDelete = () => {
+  if (selectedAppointment.value) {
+    const appointmentId = selectedAppointment.value.id
+    calendarStore.removeAppointment(appointmentId)
+    notificationsStore.addNotification({
+      type: 'success',
+      userId: 'demo-user',
+      title: t('notifications.success'),
+      message: t('calendar.appointmentDeleted') || 'Appointment deleted successfully',
+    })
+    closeModal()
+  }
 }
 
 calendarStore.setAppointments([
@@ -287,6 +384,46 @@ calendarStore.setAppointments([
     start: set(new Date(), { hours: 14, minutes: 0, seconds: 0 }),
     end: set(new Date(), { hours: 16, minutes: 0, seconds: 0 }),
     status: 'scheduled',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    createdBy: 'admin',
+  },
+  {
+    id: 'demo-3',
+    clientId: 'client3',
+    masterId: 'master1',
+    serviceId: 'service3',
+    salonId: 'salon1',
+    start: set(new Date(), { hours: 12, minutes: 0, seconds: 0 }),
+    end: set(new Date(), { hours: 12, minutes: 45, seconds: 0 }),
+    status: 'completed',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    createdBy: 'admin',
+  },
+  {
+    id: 'demo-4',
+    clientId: 'client1',
+    masterId: 'master3',
+    serviceId: 'service1',
+    salonId: 'salon1',
+    start: set(addDays(new Date(), 1), { hours: 9, minutes: 0, seconds: 0 }),
+    end: set(addDays(new Date(), 1), { hours: 10, minutes: 0, seconds: 0 }),
+    status: 'scheduled',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    createdBy: 'admin',
+  },
+  {
+    id: 'demo-5',
+    clientId: 'client2',
+    masterId: 'master2',
+    serviceId: 'service2',
+    salonId: 'salon1',
+    start: set(addDays(new Date(), 2), { hours: 11, minutes: 0, seconds: 0 }),
+    end: set(addDays(new Date(), 2), { hours: 13, minutes: 0, seconds: 0 }),
+    status: 'cancelled',
+    notes: 'Client requested cancellation',
     createdAt: new Date(),
     updatedAt: new Date(),
     createdBy: 'admin',

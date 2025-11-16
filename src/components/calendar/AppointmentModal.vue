@@ -63,21 +63,31 @@
       />
 
       <div class="flex gap-3 pt-4">
-        <PrimaryButton
-          type="submit"
-          :loading="loading"
-          class="flex-1"
+        <button
+          v-if="isEditing"
+          type="button"
+          class="px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+          @click="handleDelete"
         >
-          {{ isEditing ? t('common.save') : t('common.create') }}
-        </PrimaryButton>
+          {{ t('common.delete') }}
+        </button>
+        
+        <div class="flex-1"></div>
         
         <button
           type="button"
-          class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           @click="handleClose"
         >
           {{ t('common.cancel') }}
         </button>
+        
+        <PrimaryButton
+          type="submit"
+          :loading="loading"
+        >
+          {{ isEditing ? t('common.save') : t('common.create') }}
+        </PrimaryButton>
       </div>
     </form>
   </BaseModal>
@@ -117,6 +127,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   close: []
   submit: [data: Partial<Appointment>]
+  delete: []
 }>()
 
 const { t } = useI18n()
@@ -251,5 +262,11 @@ const handleSubmit = async () => {
 const handleClose = () => {
   resetForm()
   emit('close')
+}
+
+const handleDelete = () => {
+  if (confirm(t('calendar.confirmDelete'))) {
+    emit('delete')
+  }
 }
 </script>

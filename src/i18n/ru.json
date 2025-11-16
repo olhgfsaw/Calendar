@@ -19,6 +19,9 @@
     "submit": "Отправить",
     "today": "Сегодня",
     "clear": "Очистить",
+    "all": "Все",
+    "clearFilters": "Очистить фильтры",
+    "create": "Создать",
     "hour": "Час",
     "minute": "Минута",
     "locale": "ru-RU",
@@ -87,7 +90,10 @@
     "notes": "Заметки",
     "status": "Статус",
     "appointmentCreated": "Запись создана успешно",
-    "appointmentUpdated": "Запись обновлена успешно"
+    "appointmentUpdated": "Запись обновлена успешно",
+    "appointmentDeleted": "Запись удалена успешно",
+    "filterByMaster": "Мастер",
+    "filterByStatus": "Статус"
   },
   "appointments": {
     "title": "Записи",
