@@ -72,6 +72,7 @@
     "week": "Semana",
     "day": "Día",
     "today": "Hoy",
+    "time": "Hora",
     "salon": "Salón",
     "master": "Maestro",
     "service": "Servicio",
@@ -84,7 +85,9 @@
     "endTime": "Hora de Fin",
     "duration": "Duración",
     "notes": "Notas",
-    "status": "Estado"
+    "status": "Estado",
+    "appointmentCreated": "Cita creada exitosamente",
+    "appointmentUpdated": "Cita actualizada exitosamente"
   },
   "appointments": {
     "title": "Citas",

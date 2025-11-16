@@ -72,6 +72,7 @@
     "week": "Неделя",
     "day": "День",
     "today": "Сегодня",
+    "time": "Время",
     "salon": "Салон",
     "master": "Мастер",
     "service": "Услуга",
@@ -84,7 +85,9 @@
     "endTime": "Время окончания",
     "duration": "Длительность",
     "notes": "Заметки",
-    "status": "Статус"
+    "status": "Статус",
+    "appointmentCreated": "Запись создана успешно",
+    "appointmentUpdated": "Запись обновлена успешно"
   },
   "appointments": {
     "title": "Записи",

@@ -1,7 +1,8 @@
 <template>
   <BaseModal
-    :is-open="isOpen"
+    :model-value="isOpen"
     :title="isEditing ? t('appointments.editAppointment') : t('appointments.createAppointment')"
+    size="lg"
     @close="handleClose"
   >
     <form @submit.prevent="handleSubmit" class="space-y-4">

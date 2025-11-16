@@ -29,7 +29,18 @@ export const useAuthStore = defineStore('auth', () => {
         if (user) {
           await loadUserProfile(user.uid)
         } else {
-          currentUser.value = null
+          if (!import.meta.env.VITE_FIREBASE_API_KEY) {
+            currentUser.value = {
+              uid: 'demo-user',
+              email: 'demo@salon.com',
+              displayName: 'Demo Manager',
+              role: 'manager',
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            }
+          } else {
+            currentUser.value = null
+          }
         }
         loading.value = false
         resolve()
