@@ -74,7 +74,7 @@
           v-model="bio"
           :label="t('masters.bio')"
           :error="errors.bio"
-          rows="4"
+          :rows="4"
           :placeholder="t('masters.bioPlaceholder')"
         />
       </div>

@@ -73,7 +73,7 @@
           v-model="workingHours"
           :label="t('salons.workingHours')"
           :error="errors.workingHours"
-          rows="3"
+          :rows="3"
           :placeholder="t('salons.workingHoursPlaceholder')"
         />
       </div>
@@ -83,7 +83,7 @@
           v-model="description"
           :label="t('salons.description')"
           :error="errors.description"
-          rows="4"
+          :rows="4"
           :placeholder="t('salons.descriptionPlaceholder')"
         />
       </div>

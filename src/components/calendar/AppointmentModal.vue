@@ -172,15 +172,17 @@ const statusOptions = computed(() => [
 
 watch(() => props.isOpen, (isOpen) => {
   if (isOpen && props.appointment) {
-    setValues({
-      clientId: props.appointment.clientId,
-      masterId: props.appointment.masterId,
-      serviceId: props.appointment.serviceId,
-      salonId: props.appointment.salonId,
-      date: props.appointment.start,
-      startTime: `${props.appointment.start.getHours().toString().padStart(2, '0')}:${props.appointment.start.getMinutes().toString().padStart(2, '0')}`,
-      status: props.appointment.status,
-      notes: props.appointment.notes || '',
+    resetForm({
+      values: {
+        clientId: props.appointment.clientId,
+        masterId: props.appointment.masterId,
+        serviceId: props.appointment.serviceId,
+        salonId: props.appointment.salonId,
+        date: props.appointment.start,
+        startTime: `${props.appointment.start.getHours().toString().padStart(2, '0')}:${props.appointment.start.getMinutes().toString().padStart(2, '0')}`,
+        status: props.appointment.status,
+        notes: props.appointment.notes || '',
+      }
     })
   } else if (isOpen) {
     resetForm()

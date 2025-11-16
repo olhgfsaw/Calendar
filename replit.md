@@ -17,6 +17,26 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - VeeValidate Integration Complete
+- ✅ **All Forms Use VeeValidate**: Consistent validation across the application
+  - AppointmentModal: VeeValidate with appointmentSchema
+  - MasterPage: VeeValidate with masterSchema
+  - SalonPage: VeeValidate with salonSchema
+  - ClientPage: VeeValidate with clientSchema
+- ✅ **Validation Schemas**: Complete Yup schemas for all entities
+  - appointmentSchema: clientId, masterId, serviceId, date, startTime, status
+  - masterSchema: name, specialization, phone, email, photoURL, bio, workingDays, times
+  - salonSchema: name, address, city, country, phone, email, workingHours, description
+  - clientSchema: firstName, lastName, phone, email, notes
+- ✅ **i18n Validation Messages**: All validation messages in 3 languages (en, es, ru)
+  - Client/Master/Service/Status required messages
+  - Specialization/Address/City/Country validation
+  - URL validation for optional fields
+- ✅ **BaseCheckbox Enhancement**: Multi-select support for array values
+  - Works with boolean for single checkboxes
+  - Works with string[] for multi-select checkboxes (e.g., working days)
+- ✅ **Package Installation**: Added @vee-validate/yup package
+
 ### November 16, 2025 - Calendar Multi-View System with Drag-and-Drop Complete
 - ✅ **Calendar View Modes**: Month/Week/Day switching with dedicated components
   - Month View: Full month calendar grid with appointments

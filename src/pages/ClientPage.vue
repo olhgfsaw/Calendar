@@ -58,7 +58,7 @@
           v-model="notes"
           :label="t('clients.notes')"
           :error="errors.notes"
-          rows="4"
+          :rows="4"
           :placeholder="t('clients.notesPlaceholder')"
         />
       </div>
