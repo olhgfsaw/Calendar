@@ -18,14 +18,16 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <BaseInput
-              v-model="displayName"
+              :model-value="values.displayName"
+              @update:model-value="setFieldValue('displayName', $event)"
               :label="t('profile.displayName')"
               :error="errors.displayName"
               required
             />
 
             <BaseInput
-              v-model="email"
+              :model-value="values.email"
+              @update:model-value="setFieldValue('email', $event)"
               :label="t('profile.email')"
               type="email"
               :error="errors.email"
@@ -34,7 +36,8 @@
           </div>
 
           <BaseInput
-            v-model="photoURL"
+            :model-value="values.photoURL"
+            @update:model-value="setFieldValue('photoURL', $event)"
             :label="t('profile.photoURL')"
             :error="errors.photoURL"
             :placeholder="t('profile.photoURLPlaceholder')"
@@ -48,14 +51,16 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <BaseSelect
-              v-model="preferredLanguage"
+              :model-value="values.preferredLanguage"
+              @update:model-value="setFieldValue('preferredLanguage', $event)"
               :label="t('profile.preferredLanguage')"
               :options="languageOptions"
               :error="errors.preferredLanguage"
             />
 
             <BaseSelect
-              v-model="theme"
+              :model-value="values.theme"
+              @update:model-value="setFieldValue('theme', $event)"
               :label="t('profile.theme')"
               :options="themeOptions"
               :error="errors.theme"
@@ -64,14 +69,16 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <BaseSelect
-              v-model="timezone"
+              :model-value="values.timezone"
+              @update:model-value="setFieldValue('timezone', $event)"
               :label="t('profile.timezone')"
               :options="timezoneOptions"
               :error="errors.timezone"
             />
 
             <BaseSelect
-              v-model="timeFormat"
+              :model-value="values.timeFormat"
+              @update:model-value="setFieldValue('timeFormat', $event)"
               :label="t('profile.timeFormat')"
               :options="timeFormatOptions"
               :error="errors.timeFormat"
@@ -86,12 +93,14 @@
 
           <div class="space-y-3">
             <BaseSwitch
-              v-model="emailNotifications"
+              :model-value="values.emailNotifications"
+              @update:model-value="setFieldValue('emailNotifications', $event)"
               :label="t('profile.emailNotifications')"
             />
 
             <BaseSwitch
-              v-model="pushNotifications"
+              :model-value="values.pushNotifications"
+              @update:model-value="setFieldValue('pushNotifications', $event)"
               :label="t('profile.pushNotifications')"
             />
           </div>
@@ -119,7 +128,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useForm } from 'vee-validate'
@@ -154,7 +163,7 @@ const profileSchema = yup.object({
   pushNotifications: yup.boolean().required(),
 })
 
-const { defineField, handleSubmit, errors, resetForm } = useForm({
+const { values, errors, handleSubmit, resetForm, setFieldValue } = useForm({
   validationSchema: toTypedSchema(profileSchema),
   initialValues: {
     displayName: '',
@@ -169,15 +178,23 @@ const { defineField, handleSubmit, errors, resetForm } = useForm({
   },
 })
 
-const [displayName] = defineField('displayName')
-const [email] = defineField('email')
-const [photoURL] = defineField('photoURL')
-const [preferredLanguage] = defineField('preferredLanguage')
-const [theme] = defineField('theme')
-const [timezone] = defineField('timezone')
-const [timeFormat] = defineField('timeFormat')
-const [emailNotifications] = defineField('emailNotifications')
-const [pushNotifications] = defineField('pushNotifications')
+watch(() => authStore.currentUser, (user) => {
+  if (user) {
+    resetForm({
+      values: {
+        displayName: user.displayName || '',
+        email: user.email,
+        photoURL: user.photoURL || '',
+        preferredLanguage: userStore.settings.preferredLanguage,
+        theme: userStore.settings.theme,
+        timezone: userStore.settings.timezone,
+        timeFormat: userStore.settings.timeFormat,
+        emailNotifications: userStore.settings.emailNotifications,
+        pushNotifications: userStore.settings.pushNotifications,
+      }
+    })
+  }
+}, { immediate: true })
 
 const languageOptions = computed(() => [
   { value: 'en', label: 'English' },
@@ -208,24 +225,6 @@ const timeFormatOptions = computed(() => [
   { value: '12h', label: t('profile.timeFormat12h') },
   { value: '24h', label: t('profile.timeFormat24h') },
 ])
-
-onMounted(() => {
-  if (authStore.currentUser) {
-    resetForm({
-      values: {
-        displayName: authStore.currentUser.displayName || '',
-        email: authStore.currentUser.email,
-        photoURL: authStore.currentUser.photoURL || '',
-        preferredLanguage: userStore.settings.preferredLanguage,
-        theme: userStore.settings.theme,
-        timezone: userStore.settings.timezone,
-        timeFormat: userStore.settings.timeFormat,
-        emailNotifications: userStore.settings.emailNotifications,
-        pushNotifications: userStore.settings.pushNotifications,
-      }
-    })
-  }
-})
 
 const onSubmit = handleSubmit(async (values) => {
   if (!authStore.currentUser) return

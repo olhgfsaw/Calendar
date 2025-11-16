@@ -44,7 +44,7 @@
               <ThemeToggle />
               <NotificationBell />
               
-              <div v-if="authStore.currentUser" class="relative">
+              <div v-if="authStore.currentUser" ref="userMenuRef" class="relative">
                 <button
                   @click="showUserMenu = !showUserMenu"
                   class="flex items-center gap-2 p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -66,7 +66,7 @@
                 >
                   <div
                     v-if="showUserMenu"
-                    class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10"
+                    class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-700 ring-1 ring-black ring-opacity-5 z-10"
                   >
                     <div class="py-1">
                       <router-link
@@ -99,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useUiStore } from '@/stores/ui'
 import Logo from '@/components/base/layoutPieces/Logo.vue'
@@ -107,7 +107,8 @@ import ThemeToggle from '@/components/base/layoutPieces/ThemeToggle.vue'
 import LanguageSwitcher from '@/components/base/layoutPieces/LanguageSwitcher.vue'
 import NotificationBell from '@/components/base/layoutPieces/NotificationBell.vue'
 import Avatar from '@/components/base/layoutPieces/Avatar.vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { onClickOutside } from '@vueuse/core'
 import { 
   CalendarDaysIcon, 
   UsersIcon, 
@@ -118,7 +119,17 @@ import {
 const authStore = useAuthStore()
 const uiStore = useUiStore()
 const router = useRouter()
+const route = useRoute()
 const showUserMenu = ref(false)
+const userMenuRef = ref(null)
+
+onClickOutside(userMenuRef, () => {
+  showUserMenu.value = false
+})
+
+watch(() => route.path, () => {
+  showUserMenu.value = false
+})
 
 const navigation = [
   { path: '/calendar', label: 'nav.calendar', icon: CalendarDaysIcon },
