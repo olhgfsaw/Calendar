@@ -5,9 +5,9 @@
     size="lg"
     @close="handleClose"
   >
-    <form @submit.prevent="handleSubmit" class="space-y-4">
+    <form @submit="onSubmit" class="space-y-4">
       <BaseSelect
-        v-model="formData.clientId"
+        v-model="clientId"
         :label="t('appointments.client')"
         :options="clientOptions"
         :error="errors.clientId"
@@ -15,7 +15,7 @@
       />
 
       <BaseSelect
-        v-model="formData.masterId"
+        v-model="masterId"
         :label="t('appointments.master')"
         :options="masterOptions"
         :error="errors.masterId"
@@ -23,7 +23,7 @@
       />
 
       <BaseSelect
-        v-model="formData.serviceId"
+        v-model="serviceId"
         :label="t('appointments.service')"
         :options="serviceOptions"
         :error="errors.serviceId"
@@ -32,14 +32,14 @@
 
       <div class="grid grid-cols-2 gap-4">
         <BaseDatePicker
-          v-model="formData.date"
+          v-model="date"
           :label="t('appointments.date')"
           :error="errors.date"
           required
         />
 
         <BaseTimePicker
-          v-model="formData.startTime"
+          v-model="startTime"
           :label="t('appointments.startTime')"
           :error="errors.startTime"
           :step="30"
@@ -48,7 +48,7 @@
       </div>
 
       <BaseSelect
-        v-model="formData.status"
+        v-model="status"
         :label="t('appointments.status.label')"
         :options="statusOptions"
         :error="errors.status"
@@ -56,7 +56,7 @@
       />
 
       <BaseTextarea
-        v-model="formData.notes"
+        v-model="notes"
         :label="t('appointments.notes')"
         :placeholder="t('appointments.notesPlaceholder')"
         :rows="3"
@@ -96,13 +96,16 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { parse, set } from 'date-fns'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
+import { set } from 'date-fns'
 import BaseModal from '@/components/base/modals/BaseModal.vue'
 import BaseSelect from '@/components/base/forms/BaseSelect.vue'
 import BaseDatePicker from '@/components/base/forms/BaseDatePicker.vue'
 import BaseTimePicker from '@/components/base/forms/BaseTimePicker.vue'
 import BaseTextarea from '@/components/base/forms/BaseTextarea.vue'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
+import { appointmentSchema } from '@/utils/validators'
 import type { Appointment } from '@/types'
 
 interface Props {
@@ -133,19 +136,29 @@ const emit = defineEmits<{
 const { t } = useI18n()
 
 const loading = ref(false)
-const errors = ref<Record<string, string>>({})
 
-const formData = ref({
-  clientId: '',
-  masterId: '',
-  serviceId: '',
-  salonId: '',
-  date: null as Date | null,
-  startTime: '09:00',
-  duration: 60,
-  status: 'scheduled' as Appointment['status'],
-  notes: '',
+const { defineField, handleSubmit, errors, resetForm, setValues } = useForm({
+  validationSchema: toTypedSchema(appointmentSchema),
+  initialValues: {
+    clientId: '',
+    masterId: '',
+    serviceId: '',
+    salonId: '',
+    date: new Date(),
+    startTime: '09:00',
+    status: 'scheduled' as Appointment['status'],
+    notes: '',
+  },
 })
+
+const [clientId] = defineField('clientId')
+const [masterId] = defineField('masterId')
+const [serviceId] = defineField('serviceId')
+const [salonId] = defineField('salonId')
+const [date] = defineField('date')
+const [startTime] = defineField('startTime')
+const [status] = defineField('status')
+const [notes] = defineField('notes')
 
 const isEditing = computed(() => !!props.appointment)
 
@@ -159,93 +172,47 @@ const statusOptions = computed(() => [
 
 watch(() => props.isOpen, (isOpen) => {
   if (isOpen && props.appointment) {
-    formData.value = {
+    setValues({
       clientId: props.appointment.clientId,
       masterId: props.appointment.masterId,
       serviceId: props.appointment.serviceId,
       salonId: props.appointment.salonId,
       date: props.appointment.start,
       startTime: `${props.appointment.start.getHours().toString().padStart(2, '0')}:${props.appointment.start.getMinutes().toString().padStart(2, '0')}`,
-      duration: Math.round((props.appointment.end.getTime() - props.appointment.start.getTime()) / 60000),
       status: props.appointment.status,
       notes: props.appointment.notes || '',
-    }
+    })
   } else if (isOpen) {
     resetForm()
   }
 })
 
-watch([() => props.initialDate, () => props.initialTime], ([date, time]) => {
-  if (props.isOpen && !props.appointment && date) {
-    formData.value.date = date
+watch([() => props.initialDate, () => props.initialTime], ([newDate, time]) => {
+  if (props.isOpen && !props.appointment && newDate) {
+    setValues({ date: newDate })
   }
   if (props.isOpen && !props.appointment && time) {
-    formData.value.startTime = time
+    setValues({ startTime: time })
   }
 })
 
-const resetForm = () => {
-  formData.value = {
-    clientId: '',
-    masterId: '',
-    serviceId: '',
-    salonId: '',
-    date: new Date(),
-    startTime: '09:00',
-    duration: 60,
-    status: 'scheduled',
-    notes: '',
-  }
-  errors.value = {}
-}
-
-const validateForm = () => {
-  errors.value = {}
-  
-  if (!formData.value.clientId) {
-    errors.value.clientId = t('validation.required')
-  }
-  
-  if (!formData.value.masterId) {
-    errors.value.masterId = t('validation.required')
-  }
-  
-  if (!formData.value.serviceId) {
-    errors.value.serviceId = t('validation.required')
-  }
-  
-  if (!formData.value.date) {
-    errors.value.date = t('validation.date.required')
-  }
-  
-  if (!formData.value.startTime) {
-    errors.value.startTime = t('validation.time.required')
-  }
-  
-  return Object.keys(errors.value).length === 0
-}
-
-const handleSubmit = async () => {
-  if (!validateForm()) {
-    return
-  }
-  
+const onSubmit = handleSubmit((values) => {
   loading.value = true
   
   try {
-    const [hours, minutes] = formData.value.startTime.split(':').map(Number)
-    const start = set(formData.value.date!, { hours, minutes, seconds: 0, milliseconds: 0 })
-    const end = new Date(start.getTime() + formData.value.duration * 60000)
+    const [hours, minutes] = values.startTime.split(':').map(Number)
+    const start = set(values.date, { hours, minutes, seconds: 0, milliseconds: 0 })
+    const end = new Date(start.getTime() + 60 * 60000)
     
     const appointmentData: Partial<Appointment> = {
-      clientId: formData.value.clientId,
-      masterId: formData.value.masterId,
-      serviceId: formData.value.serviceId,
-      salonId: formData.value.salonId,
+      clientId: values.clientId,
+      masterId: values.masterId,
+      serviceId: values.serviceId,
+      salonId: values.salonId || '',
       start,
       end,
-      status: formData.value.status,
-      notes: formData.value.notes || undefined,
+      status: values.status,
+      notes: values.notes || undefined,
     }
     
     if (props.appointment) {
@@ -257,7 +224,7 @@ const handleSubmit = async () => {
   } finally {
     loading.value = false
   }
-}
+})
 
 const handleClose = () => {
   resetForm()
