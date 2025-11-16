@@ -17,6 +17,21 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - Appointment Filtering & Deletion Complete
+- ✅ **Calendar Filters**: Master and Status filtering with full sync
+  - Dropdown filters for master selection and appointment status
+  - Real-time synchronization with Pinia store using watchers (deep + immediate)
+  - Clear Filters button appears when filters are active
+  - Filter state persists across navigation
+- ✅ **Appointment Deletion**: Full delete flow with confirmation
+  - Delete button in AppointmentModal (only for existing appointments)
+  - Confirmation dialog before deletion
+  - Calendar updates immediately after deletion
+  - Success notification after deletion
+- ✅ **Notifications System**: Complete notification flow
+  - Standardized format: { type, userId, title, message }
+  - Notifications on create/update/delete operations
+
 ### November 16, 2025 - Appointment System Complete
 - ✅ **AppointmentCard Component**: Compact card for displaying appointments in calendar grid
   - Status-based color coding (scheduled, confirmed, cancelled, completed, no-show)
@@ -166,7 +181,9 @@ SESSION_SECRET=already_configured
 2. **Appointment Features**: Core functionality complete, advanced features pending
    - ✅ Create appointments via calendar grid click
    - ✅ Edit existing appointments
+   - ✅ Delete appointments with confirmation
    - ✅ Status management (scheduled, confirmed, cancelled, completed, no-show)
+   - ✅ Filter by master and status
    - ⏳ Drag-and-drop rescheduling (not yet implemented)
    - ⏳ Recurring appointments (not yet implemented)
    - ⏳ Conflict detection and double-booking prevention (not yet implemented)
@@ -183,7 +200,7 @@ SESSION_SECRET=already_configured
    - Recurring appointments support
    - Conflict detection and double-booking prevention
    - Month/day view modes (currently only week view)
-   - Filter by master, salon, service, status
+   - Additional filters: salon, service
    - Search appointments by client name
 2. **Real-time Updates**: Firebase Firestore listeners for live appointment sync
 3. **Client Booking Flow**: Public booking interface for clients
