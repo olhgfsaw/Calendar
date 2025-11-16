@@ -24,21 +24,21 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BaseInput
-          v-model="form.name"
+          v-model="name"
           :label="t('masters.name')"
           :error="errors.name"
           required
         />
         
         <BaseInput
-          v-model="form.specialization"
+          v-model="specialization"
           :label="t('masters.specialization')"
           :error="errors.specialization"
           required
         />
         
         <BaseInput
-          v-model="form.phone"
+          v-model="phone"
           :label="t('masters.phone')"
           :error="errors.phone"
           type="tel"
@@ -46,7 +46,7 @@
         />
         
         <BaseInput
-          v-model="form.email"
+          v-model="email"
           :label="t('masters.email')"
           :error="errors.email"
           type="email"
@@ -54,7 +54,7 @@
         />
 
         <BaseInput
-          v-model="form.photoURL"
+          v-model="photoURL"
           :label="t('masters.photo')"
           :error="errors.photoURL"
           type="url"
@@ -63,7 +63,7 @@
 
         <div class="flex items-center gap-4">
           <BaseSwitch
-            v-model="form.isActive"
+            v-model="isActive"
             :label="t('masters.active')"
           />
         </div>
@@ -71,7 +71,7 @@
 
       <div>
         <BaseTextarea
-          v-model="form.bio"
+          v-model="bio"
           :label="t('masters.bio')"
           :error="errors.bio"
           rows="4"
@@ -87,7 +87,7 @@
           <BaseCheckbox
             v-for="day in weekDays"
             :key="day.value"
-            v-model="form.workingDays"
+            v-model="workingDays"
             :value="day.value"
             :label="day.label"
           />
@@ -96,13 +96,13 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BaseTimePicker
-          v-model="form.startTime"
+          v-model="startTime"
           :label="t('masters.startTime')"
           :error="errors.startTime"
         />
         
         <BaseTimePicker
-          v-model="form.endTime"
+          v-model="endTime"
           :label="t('masters.endTime')"
           :error="errors.endTime"
         />
@@ -122,7 +122,9 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useNotificationsStore } from '@/store/notifications'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
+import { useNotificationsStore } from '@/stores/notifications'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import TextButton from '@/components/base/buttons/TextButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
@@ -131,6 +133,7 @@ import BaseSwitch from '@/components/base/forms/BaseSwitch.vue'
 import BaseCheckbox from '@/components/base/forms/BaseCheckbox.vue'
 import BaseTimePicker from '@/components/base/forms/BaseTimePicker.vue'
 import ConfirmModal from '@/components/base/modals/ConfirmModal.vue'
+import { masterSchema } from '@/utils/validators'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -139,20 +142,32 @@ const notificationsStore = useNotificationsStore()
 
 const showDeleteConfirm = ref(false)
 
-const form = ref({
-  name: '',
-  specialization: '',
-  phone: '',
-  email: '',
-  photoURL: '',
-  bio: '',
-  isActive: true,
-  workingDays: [] as string[],
-  startTime: '09:00',
-  endTime: '18:00',
+const { defineField, handleSubmit, errors, setValues } = useForm({
+  validationSchema: toTypedSchema(masterSchema),
+  initialValues: {
+    name: '',
+    specialization: '',
+    phone: '',
+    email: '',
+    photoURL: '',
+    bio: '',
+    isActive: true,
+    workingDays: [] as string[],
+    startTime: '09:00',
+    endTime: '18:00',
+  },
 })
 
-const errors = ref<Record<string, string>>({})
+const [name] = defineField('name')
+const [specialization] = defineField('specialization')
+const [phone] = defineField('phone')
+const [email] = defineField('email')
+const [photoURL] = defineField('photoURL')
+const [bio] = defineField('bio')
+const [isActive] = defineField('isActive')
+const [workingDays] = defineField('workingDays')
+const [startTime] = defineField('startTime')
+const [endTime] = defineField('endTime')
 
 const weekDays = computed(() => [
   { value: 'mon', label: t('common.monday') },
@@ -166,34 +181,7 @@ const weekDays = computed(() => [
 
 const isNewMaster = computed(() => route.params.id === 'new')
 
-const validate = (): boolean => {
-  errors.value = {}
-  
-  if (!form.value.name) {
-    errors.value.name = t('validation.name.required')
-  }
-  
-  if (!form.value.specialization) {
-    errors.value.specialization = t('validation.required')
-  }
-  
-  if (!form.value.phone) {
-    errors.value.phone = t('validation.phone.required')
-  }
-  
-  if (!form.value.email) {
-    errors.value.email = t('validation.email.required')
-  }
-  
-  return Object.keys(errors.value).length === 0
-}
-
-const onSubmit = () => {
-  if (!validate()) {
-    notificationsStore.error(t('validation.formErrors'))
-    return
-  }
-  
+const onSubmit = handleSubmit((values) => {
   notificationsStore.success(
     isNewMaster.value 
       ? t('masters.masterCreated') 
@@ -201,7 +189,7 @@ const onSubmit = () => {
   )
   
   router.push('/masters')
-}
+})
 
 const confirmDelete = () => {
   showDeleteConfirm.value = true
@@ -214,7 +202,7 @@ const deleteMaster = () => {
 
 onMounted(() => {
   if (!isNewMaster.value) {
-    form.value = {
+    setValues({
       name: 'Maria Rodriguez',
       specialization: 'Hair Stylist',
       phone: '+1 (555) 123-4567',
@@ -225,7 +213,7 @@ onMounted(() => {
       workingDays: ['mon', 'tue', 'wed', 'thu', 'fri'],
       startTime: '09:00',
       endTime: '18:00',
-    }
+    })
   }
 })
 </script>

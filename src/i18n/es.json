@@ -197,6 +197,34 @@
     "date": {
       "required": "La fecha es obligatoria"
     },
+    "client": {
+      "required": "El cliente es obligatorio"
+    },
+    "master": {
+      "required": "El maestro es obligatorio"
+    },
+    "service": {
+      "required": "El servicio es obligatorio"
+    },
+    "status": {
+      "required": "El estado es obligatorio"
+    },
+    "specialization": {
+      "required": "La especialización es obligatoria"
+    },
+    "address": {
+      "minLength": "La dirección debe tener al menos 5 caracteres",
+      "required": "La dirección es obligatoria"
+    },
+    "city": {
+      "required": "La ciudad es obligatoria"
+    },
+    "country": {
+      "required": "El país es obligatorio"
+    },
+    "url": {
+      "invalid": "La URL no es válida"
+    },
     "required": "Este campo es obligatorio",
     "formErrors": "Por favor corrija los errores en el formulario"
   },

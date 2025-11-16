@@ -47,21 +47,27 @@ export const appointmentSchema = yup.object({
 })
 
 export const masterSchema = yup.object({
-  firstName: nameValidator,
-  lastName: nameValidator,
-  email: emailValidator,
-  phone: phoneValidator,
+  name: nameValidator,
   specialization: yup.string().required('validation.specialization.required'),
-  status: yup.string().oneOf(['active', 'inactive']).required('validation.status.required'),
-  salonId: yup.string().nullable(),
+  phone: phoneValidator,
+  email: emailValidator,
+  photoURL: yup.string().url('validation.url.invalid').nullable(),
+  bio: yup.string().nullable(),
+  isActive: yup.boolean(),
+  workingDays: yup.array().of(yup.string()),
+  startTime: yup.string().nullable(),
+  endTime: yup.string().nullable(),
 })
 
 export const salonSchema = yup.object({
   name: yup.string().min(2, 'validation.name.minLength').max(100, 'validation.name.maxLength').required('validation.name.required'),
   address: yup.string().min(5, 'validation.address.minLength').required('validation.address.required'),
+  city: yup.string().required('validation.city.required'),
+  country: yup.string().required('validation.country.required'),
   phone: phoneValidator,
-  email: emailOptionalValidator,
+  email: emailValidator,
   workingHours: yup.string().nullable(),
+  description: yup.string().nullable(),
 })
 
 export const clientSchema = yup.object({

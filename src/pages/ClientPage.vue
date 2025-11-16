@@ -24,21 +24,21 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BaseInput
-          v-model="form.firstName"
+          v-model="firstName"
           :label="t('clients.firstName')"
           :error="errors.firstName"
           required
         />
         
         <BaseInput
-          v-model="form.lastName"
+          v-model="lastName"
           :label="t('clients.lastName')"
           :error="errors.lastName"
           required
         />
         
         <BaseInput
-          v-model="form.phone"
+          v-model="phone"
           :label="t('clients.phone')"
           :error="errors.phone"
           type="tel"
@@ -46,17 +46,16 @@
         />
         
         <BaseInput
-          v-model="form.email"
+          v-model="email"
           :label="t('clients.email')"
           :error="errors.email"
           type="email"
-          required
         />
       </div>
 
       <div>
         <BaseTextarea
-          v-model="form.notes"
+          v-model="notes"
           :label="t('clients.notes')"
           :error="errors.notes"
           rows="4"
@@ -78,12 +77,15 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useNotificationsStore } from '@/store/notifications'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
+import { useNotificationsStore } from '@/stores/notifications'
 import PrimaryButton from '@/components/base/buttons/PrimaryButton.vue'
 import TextButton from '@/components/base/buttons/TextButton.vue'
 import BaseInput from '@/components/base/forms/BaseInput.vue'
 import BaseTextarea from '@/components/base/forms/BaseTextarea.vue'
 import ConfirmModal from '@/components/base/modals/ConfirmModal.vue'
+import { clientSchema } from '@/utils/validators'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -92,46 +94,26 @@ const notificationsStore = useNotificationsStore()
 
 const showDeleteConfirm = ref(false)
 
-const form = ref({
-  firstName: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  notes: '',
+const { defineField, handleSubmit, errors, setValues } = useForm({
+  validationSchema: toTypedSchema(clientSchema),
+  initialValues: {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    notes: '',
+  },
 })
 
-const errors = ref<Record<string, string>>({})
+const [firstName] = defineField('firstName')
+const [lastName] = defineField('lastName')
+const [phone] = defineField('phone')
+const [email] = defineField('email')
+const [notes] = defineField('notes')
 
 const isNewClient = computed(() => route.params.id === 'new')
 
-const validate = (): boolean => {
-  errors.value = {}
-  
-  if (!form.value.firstName) {
-    errors.value.firstName = t('validation.name.required')
-  }
-  
-  if (!form.value.lastName) {
-    errors.value.lastName = t('validation.name.required')
-  }
-  
-  if (!form.value.phone) {
-    errors.value.phone = t('validation.phone.required')
-  }
-  
-  if (!form.value.email) {
-    errors.value.email = t('validation.email.required')
-  }
-  
-  return Object.keys(errors.value).length === 0
-}
-
-const onSubmit = () => {
-  if (!validate()) {
-    notificationsStore.error(t('validation.formErrors'))
-    return
-  }
-  
+const onSubmit = handleSubmit((values) => {
   notificationsStore.success(
     isNewClient.value 
       ? t('clients.clientCreated') 
@@ -139,7 +121,7 @@ const onSubmit = () => {
   )
   
   router.push('/clients')
-}
+})
 
 const confirmDelete = () => {
   showDeleteConfirm.value = true
@@ -152,13 +134,13 @@ const deleteClient = () => {
 
 onMounted(() => {
   if (!isNewClient.value) {
-    form.value = {
+    setValues({
       firstName: 'Emma',
       lastName: 'Watson',
       phone: '+1 (555) 222-3333',
       email: 'emma.watson@email.com',
       notes: 'Prefers morning appointments. Regular client.',
-    }
+    })
   }
 })
 </script>
