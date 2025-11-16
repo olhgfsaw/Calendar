@@ -17,6 +17,29 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - Calendar Multi-View System with Drag-and-Drop Complete
+- ✅ **Calendar View Modes**: Month/Week/Day switching with dedicated components
+  - Month View: Full month calendar grid with appointments
+  - Week View: 7-day grid with hourly slots and visual positioning
+  - Day View: Single day with detailed hourly schedule
+  - Seamless switching between views with preserved state
+- ✅ **Drag-and-Drop Functionality**: Full appointment rescheduling
+  - 15-minute precision in Week and Day views
+  - Visual feedback during drag operations
+  - Duration preservation when moving appointments
+  - Timezone-safe date handling with date-fns parse
+  - Accurate visual positioning based on start time and duration
+- ✅ **Visual Positioning System**:
+  - Appointments positioned by exact minutes (not just hours)
+  - Height reflects actual appointment duration
+  - Top offset calculated from start minutes
+  - Minimum height 30px for visibility
+- ✅ **Navigation**: Adaptive controls for each view
+  - Month navigation: previous/next month
+  - Week navigation: previous/next week
+  - Day navigation: previous/next day
+  - "Today" button returns to current date in any view
+
 ### November 16, 2025 - Universal DataTable Component with Sorting & Pagination
 - ✅ **BaseDataTable Component**: Universal table component with advanced features
   - Grid-based layout with dynamic columns (CSS grid)
@@ -202,7 +225,10 @@ SESSION_SECRET=already_configured
    - ✅ Delete appointments with confirmation
    - ✅ Status management (scheduled, confirmed, cancelled, completed, no-show)
    - ✅ Filter by master and status
-   - ⏳ Drag-and-drop rescheduling (not yet implemented)
+   - ✅ Drag-and-drop rescheduling with 15-minute precision
+   - ✅ Month/Week/Day view modes
+   - ✅ Duration preservation during drag
+   - ✅ Visual positioning based on exact time
    - ⏳ Recurring appointments (not yet implemented)
    - ⏳ Conflict detection and double-booking prevention (not yet implemented)
 
@@ -214,12 +240,12 @@ SESSION_SECRET=already_configured
 
 ### Future Enhancements
 1. **Advanced Calendar Features**:
-   - Drag-and-drop appointment rescheduling
    - Recurring appointments support
    - Conflict detection and double-booking prevention
-   - Month/day view modes (currently only week view)
    - Additional filters: salon, service
    - Search appointments by client name
+   - Multi-select for bulk operations
+   - Print/export views
 2. **Real-time Updates**: Firebase Firestore listeners for live appointment sync
 3. **Client Booking Flow**: Public booking interface for clients
 4. **Mobile Optimization**: Responsive design for tablets and phones
