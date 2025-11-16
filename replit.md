@@ -17,6 +17,14 @@ A comprehensive calendar management application for beauty salons built with Vue
 
 ## Recent Changes
 
+### November 16, 2025 - Full Locale Support for BaseDatePicker  
+- ✅ Implemented complete locale-specific formatting using date-fns locales (enUS, es, ru)
+- ✅ Added locale-aware week start: Sunday for EN, Monday for ES/RU
+- ✅ Localized month names and date formatting (MMMM yyyy, PPP format)
+- ✅ Added short weekday abbreviations to i18n: EN (Su Mo Tu...), ES (Do Lu Ma...), RU (Вс Пн Вт...)
+- ✅ Calendar grid now respects locale-specific week start using startOfWeek/endOfWeek
+- ✅ All date formatting follows locale conventions
+
 ### November 16, 2025 - Management Pages & Form Components Added
 - ✅ Created BaseDatePicker component with calendar grid and i18n support
 - ✅ Created BaseTimePicker with 30-minute step support and v-model integration
@@ -24,7 +32,6 @@ A comprehensive calendar management application for beauty salons built with Vue
 - ✅ Added management routes with role-based permissions (admin, manager)
 - ✅ Extended translations for all three languages (weekdays, validation, management sections)
 - ✅ Fixed BaseTimePicker to properly emit v-model updates
-- ⚠️ BaseDatePicker needs locale-specific formatting improvements (month names, week start)
 
 ### November 16, 2025 - Initial MVP Setup Complete
 - ✅ Created complete UI component library (buttons, forms, modals, layout pieces)
@@ -127,19 +134,15 @@ SESSION_SECRET=already_configured
 ## Known Issues & Next Steps
 
 ### Known Limitations
-1. **BaseDatePicker i18n**: Currently uses English month names and Sunday-first week start
-   - Need to implement locale-specific date formatting using date-fns locales
-   - Need to respect locale-specific week start (Monday for ES/RU, Sunday for EN)
-2. **Management Pages**: Currently use mock data for demonstration
+1. **Management Pages**: Currently use mock data for demonstration
    - Ready for Firebase integration when credentials are configured
    - Need to implement actual CRUD operations with Firestore
 
 ### Required for Production
 1. **Firebase Credentials**: Add Firebase configuration via Replit secrets
-2. **BaseDatePicker Localization**: Implement full locale support (week start, formatting)
-3. **Data Persistence**: Connect management pages to Firebase Firestore
-4. **Email Templates**: Configure Firebase email templates for password reset
-5. **Role Assignment**: Implement admin interface for assigning user roles
+2. **Data Persistence**: Connect management pages to Firebase Firestore
+3. **Email Templates**: Configure Firebase email templates for password reset
+4. **Role Assignment**: Implement admin interface for assigning user roles
 
 ### Future Enhancements
 1. Complete calendar functionality (drag-and-drop appointments)
